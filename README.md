@@ -1,3 +1,1 @@
-# DSA
-
-Common computer science data structures & algorithms.
+# data structures & algorithms
