@@ -5,7 +5,8 @@
   "author": "Ahmed Hashim <ahashim@users.noreply.github.com> (https://ahmedhashim.app)",
   "license": "MIT",
   "scripts": {
-    "test": "ava"
+    "test": "ava",
+    "watch": "ava --watch"
   },
   "ava": {
     "files": ["src/**/*.ts"],
