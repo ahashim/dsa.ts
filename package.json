@@ -5,8 +5,8 @@
   "author": "Ahmed Hashim <ahashim@users.noreply.github.com> (https://ahmedhashim.app)",
   "license": "MIT",
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": ">=5.31.0",
-    "@typescript-eslint/parser": ">=5.31.0",
+    "@typescript-eslint/eslint-plugin": "^5.39.0",
+    "@typescript-eslint/parser": "^5.39.0",
     "eslint": ">=8.0.0",
     "eslint-config-xo": "^0.42.0",
     "eslint-config-xo-typescript": "^0.53.0",
