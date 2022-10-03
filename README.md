@@ -1,3 +1,3 @@
 # data structures & algorithms
 
-computer science fundamentals
+computer science fundamentals written & tested in typescript
