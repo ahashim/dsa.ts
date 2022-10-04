@@ -1,7 +1,7 @@
 import test from 'ava';
 
 /*
- * @dev Intersection of two arrays.
+ * @dev Intersection of two numeric arrays.
  * @time O(n)
  * @space O(n)
  */
@@ -14,15 +14,26 @@ const arrayIntersection = (arr1: number[], arr2: number[]): number[] => {
   // vars
   const result: number[] = [];
   const hashTable: HashTable = {};
+  let smaller: number[];
+  let larger: number[];
 
-  // store all values from one array into the hashtable
-  for (let i = 0; i < arr1.length; i++) {
-    hashTable[arr1[i]] = true;
+  // determine size
+  if (arr1.length > arr2.length) {
+    smaller = arr2;
+    larger = arr1;
+  } else {
+    smaller = arr1;
+    larger = arr2;
   }
 
-  // compare hashtable values with the other array values
-  for (let i = 0; i < arr2.length; i++) {
-    if (hashTable[arr2[i]]) result.push(arr2[i]);
+  // store all values from the smaller array into the hashtable
+  for (let i = 0; i < smaller.length; i++) {
+    hashTable[smaller[i]] = true;
+  }
+
+  // compare hashtable values with the values of the larger array
+  for (let i = 0; i < larger.length; i++) {
+    if (hashTable[larger[i]]) result.push(larger[i]);
   }
 
   return result;
