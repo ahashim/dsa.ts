@@ -5,7 +5,7 @@ import test from 'ava';
  * @time O(n)
  * @space O(n)
  */
-const arrayIntersection = (arr1: number[], arr2: number[]): number[] => {
+const getIntersection = (arr1: number[], arr2: number[]): number[] => {
   // types
   type HashTable = {
     [key: number]: boolean;
@@ -39,8 +39,8 @@ const arrayIntersection = (arr1: number[], arr2: number[]): number[] => {
   return result;
 };
 
-test('arrayIntersection', t => {
-  const actual = arrayIntersection([1,2,3,4,5], [0,2,4,6]);
+test('getIntersection', t => {
+  const actual = getIntersection([1,2,3,4,5], [0,2,4,6]);
   const expected = [2,4];
 
   t.deepEqual(actual, expected);
@@ -77,11 +77,11 @@ test('findDuplicate', t => {
 });
 
 /*
- * @dev Find the first duplicate character.
+ * @dev Find missing alphabetic letters from a string.
  * @time O(n)
  * @space O(n)
  */
-const findMissingAlphabetCharacter = (str: string): string => {
+const findMissingLetters = (str: string): string => {
   // types
   type HashTable = {
     'a': boolean;
@@ -161,8 +161,8 @@ const findMissingAlphabetCharacter = (str: string): string => {
   return result.join('');
 }
 
-test('findMissingAlphabetCharacter', t => {
-  const actual = findMissingAlphabetCharacter('the quick brown box jumps over the lazy hog');
+test('findMissingLetters', t => {
+  const actual = findMissingLetters('the quick brown box jumps over the lazy hog');
   const expected = 'df';
 
   t.is(actual, expected);
@@ -173,7 +173,7 @@ test('findMissingAlphabetCharacter', t => {
  * @time O(n)
  * @space O(n)
  */
-const findFirstNonDuplicateCharacter = (str: string): string => {
+const firstNonDuplicate = (str: string): string => {
   // types
   type HashTable = {
     [key: string]: number
@@ -199,8 +199,8 @@ const findFirstNonDuplicateCharacter = (str: string): string => {
   return '';
 }
 
-test('findFirstNonDuplicateCharacter', t => {
-  const actual = findFirstNonDuplicateCharacter('minimum');
+test('firstNonDuplicate', t => {
+  const actual = firstNonDuplicate('minimum');
   const expected = 'n';
 
   t.is(actual, expected);
