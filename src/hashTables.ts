@@ -81,7 +81,7 @@ test('findDuplicate', t => {
  * @time O(n)
  * @space O(n)
  */
-const findMissingAlphabeticCharacter = (str: string): string => {
+const findMissingAlphabetCharacter = (str: string): string => {
   // types
   type HashTable = {
     'a': boolean;
@@ -143,26 +143,65 @@ const findMissingAlphabeticCharacter = (str: string): string => {
     'z': false,
   }
 
-  // remove whitespace
-  const stripped = str.replace(/\s/g, '');
-
   // mark seen characters
-  for (let i = 0; i < stripped.length; i++) {
-    seenLetters[stripped[i].toLowerCase() as keyof HashTable] = true;
+  for (let i = 0; i < str.length; i++) {
+    if (!str[i].match(/\s/)) { // skip whitespace
+      seenLetters[str[i].toLowerCase() as keyof HashTable] = true;
+    }
   }
 
   // determine unseen characters
   let char: keyof HashTable;
   for (char in seenLetters) {
-    if (!seenLetters[char]) result.push(char);
+    if (Object.hasOwn(seenLetters, char) && !seenLetters[char]) {
+      result.push(char);
+    }
   }
 
   return result.join('');
 }
 
-test('findMissingAlphabeticCharacter', t => {
-  const actual = findMissingAlphabeticCharacter('the quick brown box jumps over the lazy hog');
+test('findMissingAlphabetCharacter', t => {
+  const actual = findMissingAlphabetCharacter('the quick brown box jumps over the lazy hog');
   const expected = 'df';
+
+  t.is(actual, expected);
+});
+
+/*
+ * @dev Find the first non-duplicate character.
+ * @time O(n)
+ * @space O(n)
+ */
+const findFirstNonDuplicateCharacter = (str: string): string => {
+  // types
+  type HashTable = {
+    [key: string]: number
+  }
+
+  //vars
+  const counts: HashTable = {};
+
+  // count letters in string
+  for (let i = 0; i < str.length; i++) {
+    const char = str[i];
+
+    counts[char] = counts[char]
+      ? counts[char] + 1
+      : 1;
+  }
+
+  // check for the first non-duplicate
+  for (let i = 0; i < str.length; i++) {
+    if (counts[str[i]] === 1) return str[i];
+  }
+
+  return '';
+}
+
+test('findFirstNonDuplicateCharacter', t => {
+  const actual = findFirstNonDuplicateCharacter('minimum');
+  const expected = 'n';
 
   t.is(actual, expected);
 });
