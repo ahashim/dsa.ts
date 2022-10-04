@@ -8,7 +8,7 @@ import test from 'ava';
 const arrayIntersection = (arr1: number[], arr2: number[]): number[] => {
   // types
   type HashTable = {
-    [key: number]: boolean
+    [key: number]: boolean;
   }
 
   // vars
@@ -44,7 +44,7 @@ test('arrayIntersection', t => {
   const expected = [2,4];
 
   t.deepEqual(actual, expected);
-})
+});
 
 /*
  * @dev Find the first duplicate character.
@@ -54,7 +54,7 @@ test('arrayIntersection', t => {
 const findDuplicate = (arr: string[]): string => {
   // types
   type HashTable = {
-    [key: string]: boolean
+    [key: string]: boolean;
   }
 
   // vars
@@ -74,4 +74,95 @@ test('findDuplicate', t => {
   const expected = 'c';
 
   t.is(actual, expected);
-})
+});
+
+/*
+ * @dev Find the first duplicate character.
+ * @time O(n)
+ * @space O(n)
+ */
+const findMissingAlphabeticCharacter = (str: string): string => {
+  // types
+  type HashTable = {
+    'a': boolean;
+    'b': boolean;
+    'c': boolean;
+    'd': boolean;
+    'e': boolean;
+    'f': boolean;
+    'g': boolean;
+    'h': boolean;
+    'i': boolean;
+    'j': boolean;
+    'k': boolean;
+    'l': boolean;
+    'm': boolean;
+    'n': boolean;
+    'o': boolean;
+    'p': boolean;
+    'q': boolean;
+    'r': boolean;
+    's': boolean;
+    't': boolean;
+    'u': boolean;
+    'v': boolean;
+    'w': boolean;
+    'x': boolean;
+    'y': boolean;
+    'z': boolean;
+  }
+
+  // vars
+  const result: string[] = [];
+  const seenLetters: HashTable = {
+    'a': false,
+    'b': false,
+    'c': false,
+    'd': false,
+    'e': false,
+    'f': false,
+    'g': false,
+    'h': false,
+    'i': false,
+    'j': false,
+    'k': false,
+    'l': false,
+    'm': false,
+    'n': false,
+    'o': false,
+    'p': false,
+    'q': false,
+    'r': false,
+    's': false,
+    't': false,
+    'u': false,
+    'v': false,
+    'w': false,
+    'x': false,
+    'y': false,
+    'z': false,
+  }
+
+  // remove whitespace
+  const stripped = str.replace(/\s/g, '');
+
+  // mark seen characters
+  for (let i = 0; i < stripped.length; i++) {
+    seenLetters[stripped[i].toLowerCase() as keyof HashTable] = true;
+  }
+
+  // determine unseen characters
+  let char: keyof HashTable;
+  for (char in seenLetters) {
+    if (!seenLetters[char]) result.push(char);
+  }
+
+  return result.join('');
+}
+
+test('findMissingAlphabeticCharacter', t => {
+  const actual = findMissingAlphabeticCharacter('the quick brown box jumps over the lazy hog');
+  const expected = 'df';
+
+  t.is(actual, expected);
+});
