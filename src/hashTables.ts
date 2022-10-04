@@ -45,3 +45,33 @@ test('arrayIntersection', t => {
 
   t.deepEqual(actual, expected);
 })
+
+/*
+ * @dev Find the first duplicate character.
+ * @time O(n)
+ * @space O(n)
+ */
+const findDuplicate = (arr: string[]): string => {
+  // types
+  type HashTable = {
+    [key: string]: boolean
+  }
+
+  // vars
+  const hashTable: HashTable = {};
+
+  for (let i = 0; i < arr.length; i++) {
+    if (hashTable[arr[i]]) return arr[i];
+
+    hashTable[arr[i]] = true;
+  }
+
+  return '';
+}
+
+test('findDuplicate', t => {
+  const actual = findDuplicate(['a', 'b', 'c', 'd', 'c', 'e']);
+  const expected = 'c';
+
+  t.is(actual, expected);
+})
