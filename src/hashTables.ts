@@ -179,7 +179,7 @@ const firstNonDuplicate = (str: string): string => {
     [key: string]: number
   }
 
-  //vars
+  // vars
   const counts: HashTable = {};
 
   // count letters in string
