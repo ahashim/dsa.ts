@@ -1,4 +1,4 @@
-import test from 'ava';
+import test from "ava";
 
 /*
  * @dev Intersection of two numeric arrays.
@@ -9,7 +9,7 @@ const getIntersection = (arr1: number[], arr2: number[]): number[] => {
   // types
   type HashTable = {
     [key: number]: boolean;
-  }
+  };
 
   // vars
   const result: number[] = [];
@@ -39,9 +39,9 @@ const getIntersection = (arr1: number[], arr2: number[]): number[] => {
   return result;
 };
 
-test('getIntersection', t => {
-  const actual = getIntersection([1,2,3,4,5], [0,2,4,6]);
-  const expected = [2,4];
+test("getIntersection", (t) => {
+  const actual = getIntersection([1, 2, 3, 4, 5], [0, 2, 4, 6]);
+  const expected = [2, 4];
 
   t.deepEqual(actual, expected);
 });
@@ -55,7 +55,7 @@ const findDuplicate = (arr: string[]): string => {
   // types
   type HashTable = {
     [key: string]: boolean;
-  }
+  };
 
   // vars
   const hashTable: HashTable = {};
@@ -66,12 +66,12 @@ const findDuplicate = (arr: string[]): string => {
     hashTable[arr[i]] = true;
   }
 
-  return '';
-}
+  return "";
+};
 
-test('findDuplicate', t => {
-  const actual = findDuplicate(['a', 'b', 'c', 'd', 'c', 'e']);
-  const expected = 'c';
+test("findDuplicate", (t) => {
+  const actual = findDuplicate(["a", "b", "c", "d", "c", "e"]);
+  const expected = "c";
 
   t.is(actual, expected);
 });
@@ -84,68 +84,69 @@ test('findDuplicate', t => {
 const findMissingLetters = (str: string): string => {
   // types
   type HashTable = {
-    'a': boolean;
-    'b': boolean;
-    'c': boolean;
-    'd': boolean;
-    'e': boolean;
-    'f': boolean;
-    'g': boolean;
-    'h': boolean;
-    'i': boolean;
-    'j': boolean;
-    'k': boolean;
-    'l': boolean;
-    'm': boolean;
-    'n': boolean;
-    'o': boolean;
-    'p': boolean;
-    'q': boolean;
-    'r': boolean;
-    's': boolean;
-    't': boolean;
-    'u': boolean;
-    'v': boolean;
-    'w': boolean;
-    'x': boolean;
-    'y': boolean;
-    'z': boolean;
-  }
+    a: boolean;
+    b: boolean;
+    c: boolean;
+    d: boolean;
+    e: boolean;
+    f: boolean;
+    g: boolean;
+    h: boolean;
+    i: boolean;
+    j: boolean;
+    k: boolean;
+    l: boolean;
+    m: boolean;
+    n: boolean;
+    o: boolean;
+    p: boolean;
+    q: boolean;
+    r: boolean;
+    s: boolean;
+    t: boolean;
+    u: boolean;
+    v: boolean;
+    w: boolean;
+    x: boolean;
+    y: boolean;
+    z: boolean;
+  };
 
   // vars
   const result: string[] = [];
   const seenLetters: HashTable = {
-    'a': false,
-    'b': false,
-    'c': false,
-    'd': false,
-    'e': false,
-    'f': false,
-    'g': false,
-    'h': false,
-    'i': false,
-    'j': false,
-    'k': false,
-    'l': false,
-    'm': false,
-    'n': false,
-    'o': false,
-    'p': false,
-    'q': false,
-    'r': false,
-    's': false,
-    't': false,
-    'u': false,
-    'v': false,
-    'w': false,
-    'x': false,
-    'y': false,
-    'z': false,
-  }
+    a: false,
+    b: false,
+    c: false,
+    d: false,
+    e: false,
+    f: false,
+    g: false,
+    h: false,
+    i: false,
+    j: false,
+    k: false,
+    l: false,
+    m: false,
+    n: false,
+    o: false,
+    p: false,
+    q: false,
+    r: false,
+    s: false,
+    t: false,
+    u: false,
+    v: false,
+    w: false,
+    x: false,
+    y: false,
+    z: false,
+  };
 
   // mark seen characters
   for (let i = 0; i < str.length; i++) {
-    if (!str[i].match(/\s/)) { // skip whitespace
+    if (!str[i].match(/\s/)) {
+      // skip whitespace
       seenLetters[str[i].toLowerCase() as keyof HashTable] = true;
     }
   }
@@ -158,12 +159,14 @@ const findMissingLetters = (str: string): string => {
     }
   }
 
-  return result.join('');
-}
+  return result.join("");
+};
 
-test('findMissingLetters', t => {
-  const actual = findMissingLetters('the quick brown box jumps over the lazy hog');
-  const expected = 'df';
+test("findMissingLetters", (t) => {
+  const actual = findMissingLetters(
+    "the quick brown box jumps over the lazy hog"
+  );
+  const expected = "df";
 
   t.is(actual, expected);
 });
@@ -176,8 +179,8 @@ test('findMissingLetters', t => {
 const firstNonDuplicate = (str: string): string => {
   // types
   type HashTable = {
-    [key: string]: number
-  }
+    [key: string]: number;
+  };
 
   // vars
   const counts: HashTable = {};
@@ -186,9 +189,7 @@ const firstNonDuplicate = (str: string): string => {
   for (let i = 0; i < str.length; i++) {
     const char = str[i];
 
-    counts[char] = counts[char]
-      ? counts[char] + 1
-      : 1;
+    counts[char] = counts[char] ? counts[char] + 1 : 1;
   }
 
   // check for the first non-duplicate
@@ -196,12 +197,12 @@ const firstNonDuplicate = (str: string): string => {
     if (counts[str[i]] === 1) return str[i];
   }
 
-  return '';
-}
+  return "";
+};
 
-test('firstNonDuplicate', t => {
-  const actual = firstNonDuplicate('minimum');
-  const expected = 'n';
+test("firstNonDuplicate", (t) => {
+  const actual = firstNonDuplicate("minimum");
+  const expected = "n";
 
   t.is(actual, expected);
 });
