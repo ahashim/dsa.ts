@@ -6,9 +6,9 @@ import test from "ava";
  * @space O(n)
  */
 const characterCount = (arr: string[]): number => {
-  return arr.length === 1 // base case
-    ? arr[0].length
-    : arr[0].length + characterCount(arr.slice(1)); // pop first item & recurse
+  return arr.length === 1
+    ? arr[0].length // base case
+    : arr[0].length + characterCount(arr.slice(1)); // recurse
 };
 
 test("characterCount", (t) => {
@@ -44,8 +44,8 @@ test("selectEven", (t) => {
  * @space O(n)
  */
 const triangle = (n: number): number => {
-  return n == 1 // base case
-    ? 1
+  return n == 1
+    ? 1 // base case
     : n + triangle(n - 1); // recurse
 };
 
@@ -63,8 +63,8 @@ test("triangle", (t) => {
  */
 const indexOfX = (str: string): number => {
   return str[0] === "x" // base case
-    ? 0
-    : 1 + indexOfX(str.slice(1));
+    ? 0 // base case
+    : 1 + indexOfX(str.slice(1)); // recurse
 };
 
 test("indexOfX", (t) => {
@@ -84,14 +84,13 @@ test("indexOfX", (t) => {
  * +--+--+--+--+--+--+--+
  * |  |  |  |  |  |  |XX|
  * +--+--+--+--+--+--+--+
- *
  * @time O(n)
  * @space O(n)
  */
 const uniquePaths = (rows: number, cols: number): number => {
-  return rows === 1 || cols === 1 // base case
-    ? 1
-    : uniquePaths(rows - 1, cols) + uniquePaths(rows, cols - 1);
+  return rows === 1 || cols === 1
+    ? 1 // base case
+    : uniquePaths(rows - 1, cols) + uniquePaths(rows, cols - 1); // recurse
 };
 
 test("uniquePaths", (t) => {
