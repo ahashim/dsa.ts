@@ -11,7 +11,7 @@
   "ava": {
     "files": ["src/**/*.ts"],
     "extensions": ["ts"],
-    "require": ["ts-node/register"]
+    "require": ["ts-node/register/transpile-only"]
   },
   "devDependencies": {
     "@ava/typescript": "^3.0.1",
