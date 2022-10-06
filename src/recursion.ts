@@ -62,7 +62,7 @@ test("triangle", (t) => {
  * @space O(n)
  */
 const indexOfX = (str: string): number => {
-  return str[0] === "x" // base case
+  return str[0] === "x"
     ? 0 // base case
     : 1 + indexOfX(str.slice(1)); // recurse
 };
