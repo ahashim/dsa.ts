@@ -72,9 +72,52 @@ class QuickSortable {
 }
 
 test("quickSort", (t) => {
-  const primes = new QuickSortable([11, 2, 5, 7, 3]);
-  const actual = primes.sort();
+  const actual = new QuickSortable([11, 2, 5, 7, 3]).sort();
   const expected = [2, 3, 5, 7, 11];
 
   t.deepEqual(actual, expected);
+});
+
+/*
+ * @dev Finds the greatest product of 3 numbers from an array using quicksort.
+ * @time O(n*log(n))
+ * @space O(n)
+ */
+const greatestProductOf3 = (arr: number[]): number => {
+  const sorted = new QuickSortable(arr).sort();
+
+  return (
+    sorted[sorted.length - 1] *
+    sorted[sorted.length - 2] *
+    sorted[sorted.length - 3]
+  );
+};
+
+test("greatestProductOf3", (t) => {
+  const actual = greatestProductOf3([11, 2, 5, 7, 3]);
+  const expected = 385;
+
+  t.is(actual, expected);
+});
+
+/*
+ * @dev Finds the missing number in a linearly filled array using quicksort.
+ * @time O(n*log(n))
+ * @space O(n)
+ */
+const findMissingNumber = (arr: number[]): number | null => {
+  const sorted = new QuickSortable(arr).sort();
+
+  for (let i = 0; i < sorted.length; i++) {
+    if (sorted[i] !== i) return i;
+  }
+
+  return null;
+};
+
+test("findMissingNumber", (t) => {
+  const actual = findMissingNumber([5, 2, 4, 1, 0]);
+  const expected = 3;
+
+  t.is(actual, expected);
 });
