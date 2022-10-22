@@ -1,7 +1,7 @@
 import test from "ava";
 
 /*
- * @dev QuickSortable class implements quickSort on an array of numbers.
+ * @dev Implements quickSort on an array of numbers.
  * @time O(n*log(n))
  * @space O(n)
  */
