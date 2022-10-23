@@ -15,7 +15,7 @@ class Node<T> {
   }
 }
 
-test("nodes", (t) => {
+test("Node", (t) => {
   const [n1] = nodesFromSentence("hello world!");
   const actual = n1.next?.data;
   const expected = "world!";
