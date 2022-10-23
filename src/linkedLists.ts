@@ -7,15 +7,15 @@ import test from "ava";
  */
 class Node<T> {
   public data: T;
-  public next: Node<T> | null;
+  public next: Node<T> | undefined;
 
-  constructor(value: T, nextNode: Node<T> | null = null) {
+  constructor(value: T, nextNode: Node<T> | undefined = undefined) {
     this.data = value;
     this.next = nextNode;
   }
 }
 
-test("node", (t) => {
+test("data", (t) => {
   const [n1] = nodesFromSentence("hello world!");
   const actual = n1.next?.data;
   const expected = "world!";
@@ -34,12 +34,34 @@ class LinkedList<T> {
   constructor(start: Node<T>) {
     this.head = start;
   }
+
+  read = (index: number): T | undefined => {
+    let currentIndex = 0;
+    let currentNode: Node<T> | undefined = this.head;
+
+    while (currentIndex < index) {
+      currentNode = currentNode.next;
+      currentIndex++;
+
+      if (!currentNode) return;
+    }
+
+    return currentNode.data;
+  };
 }
 
 test("head", (t) => {
   const list = new LinkedList(nodesFromSentence("hello world!")[0]);
   const actual = list.head.data;
   const expected = "hello";
+
+  t.is(actual, expected);
+});
+
+test("read", (t) => {
+  const list = new LinkedList(nodesFromSentence("i am the senate!")[0]);
+  const actual = list.read(3);
+  const expected = "senate!";
 
   t.is(actual, expected);
 });
