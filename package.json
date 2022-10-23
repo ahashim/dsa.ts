@@ -6,12 +6,18 @@
   "license": "MIT",
   "scripts": {
     "test": "ava",
-    "watch": "ava --watch"
+    "watch": "ava --watch --verbose"
   },
   "ava": {
-    "files": ["src/**/*.ts"],
-    "extensions": ["ts"],
-    "require": ["ts-node/register/transpile-only"]
+    "files": [
+      "src/**/*.ts"
+    ],
+    "extensions": [
+      "ts"
+    ],
+    "require": [
+      "ts-node/register/transpile-only"
+    ]
   },
   "devDependencies": {
     "@ava/typescript": "^3.0.1",

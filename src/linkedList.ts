@@ -104,6 +104,26 @@ class LinkedList<T> {
 
     return currentNode.data;
   };
+
+  reverse = (): void => {
+    let node: Node<T> | undefined = this.head,
+      previous,
+      tmp;
+
+    while (node) {
+      // save the next node before overwriting
+      tmp = node.next;
+
+      // reverse the pointer
+      node.next = previous;
+
+      // step forward
+      previous = node;
+      node = tmp;
+    }
+
+    if (previous) this.head = previous;
+  };
 }
 
 test("deleteAt", (t) => {
@@ -151,6 +171,18 @@ test("read", (t) => {
 
   const actual = list.read(3);
   const expected = "senate";
+
+  t.is(actual, expected);
+});
+
+test("reverse", (t) => {
+  const list = new LinkedList(
+    nodesFromSentence("we will watch your career with great interest")[0]
+  );
+  list.reverse();
+
+  const actual = list.head.data;
+  const expected = "interest";
 
   t.is(actual, expected);
 });
