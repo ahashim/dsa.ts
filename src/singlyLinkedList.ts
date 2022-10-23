@@ -118,7 +118,7 @@ test("deleteAt", (t) => {
 });
 
 test("head", (t) => {
-  const list = new LinkedList(nodesFromSentence("hello world!")[0]);
+  const list = new LinkedList(nodesFromSentence("hello there!")[0]);
 
   const actual = list.head.data;
   const expected = "hello";
@@ -147,10 +147,10 @@ test("insertAt", (t) => {
 });
 
 test("read", (t) => {
-  const list = new LinkedList(nodesFromSentence("i am the senate!")[0]);
+  const list = new LinkedList(nodesFromSentence("i am the senate")[0]);
 
   const actual = list.read(3);
-  const expected = "senate!";
+  const expected = "senate";
 
   t.is(actual, expected);
 });
