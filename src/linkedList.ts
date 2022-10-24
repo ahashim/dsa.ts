@@ -106,23 +106,23 @@ class LinkedList<T> {
   };
 
   reverse = (): void => {
-    let node: Node<T> | undefined = this.head,
-      previous,
-      tmp;
+    let currentNode: Node<T> | undefined = this.head,
+      previousNode,
+      nextNode;
 
-    while (node) {
+    while (currentNode) {
       // save the next node before overwriting
-      tmp = node.next;
+      nextNode = currentNode.next;
 
       // reverse the pointer
-      node.next = previous;
+      currentNode.next = previousNode;
 
       // step forward
-      previous = node;
-      node = tmp;
+      previousNode = currentNode;
+      currentNode = nextNode;
     }
 
-    if (previous) this.head = previous;
+    if (previousNode) this.head = previousNode;
   };
 }
 
