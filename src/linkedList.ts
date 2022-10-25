@@ -111,13 +111,13 @@ class LinkedList<T> {
       nextNode;
 
     while (currentNode) {
-      // save the next node before overwriting
+      // save the next node before stepping forward in the list
       nextNode = currentNode.next;
 
-      // reverse the pointer
+      // reverse the pointer of the current node
       currentNode.next = previousNode;
 
-      // step forward
+      // step forward & repeat
       previousNode = currentNode;
       currentNode = nextNode;
     }
