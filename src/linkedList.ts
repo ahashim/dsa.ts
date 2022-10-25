@@ -6,18 +6,18 @@ import test from "ava";
  * @space O(n)
  */
 class Node<T> {
-  public data: T;
+  public value: T;
   public next: Node<T> | undefined;
 
-  constructor(value: T, nextNode: Node<T> | undefined = undefined) {
-    this.data = value;
+  constructor(nodeValue: T, nextNode: Node<T> | undefined = undefined) {
+    this.value = nodeValue;
     this.next = nextNode;
   }
 }
 
 test("Node", (t) => {
   const [n1] = nodesFromSentence("hello world!");
-  const actual = n1.next?.data;
+  const actual = n1.next?.value;
   const expected = "world!";
 
   t.is(actual, expected);
@@ -57,7 +57,7 @@ class LinkedList<T> {
     let currentNode: Node<T> | undefined = this.head;
 
     while (currentNode) {
-      if (currentNode?.data === value) return currentIndex;
+      if (currentNode?.value === value) return currentIndex;
 
       currentNode = currentNode?.next;
       currentIndex++;
@@ -102,7 +102,7 @@ class LinkedList<T> {
       if (!currentNode) return;
     }
 
-    return currentNode.data;
+    return currentNode.value;
   };
 
   reverse = (): void => {
@@ -140,7 +140,7 @@ test("deleteAt", (t) => {
 test("head", (t) => {
   const list = new LinkedList(nodesFromSentence("hello there!")[0]);
 
-  const actual = list.head.data;
+  const actual = list.head.value;
   const expected = "hello";
 
   t.is(actual, expected);
@@ -181,7 +181,7 @@ test("reverse", (t) => {
   );
   list.reverse();
 
-  const actual = list.head.data;
+  const actual = list.head.value;
   const expected = "interest";
 
   t.is(actual, expected);
