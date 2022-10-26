@@ -6,8 +6,8 @@ import test from "ava";
  * @space O(n)
  */
 class Node<T> {
-  public left: Node<T> | undefined;
-  public right: Node<T> | undefined;
+  public left?: Node<T>;
+  public right?: Node<T>;
 
   constructor(public value: T) {}
 }
@@ -30,7 +30,35 @@ test("Node", (t) => {
 class BinarySearchTree<T> {
   private root?: Node<T>;
 
+  public contains = (value: T): boolean => {
+    let currentNode = this.root;
+
+    while (currentNode) {
+      if (value === currentNode.value) {
+        // base case: found the value
+        return true;
+      } else if (value > currentNode.value) {
+        // search less than
+        currentNode = currentNode.right;
+      } else {
+        // search greater than
+        currentNode = currentNode.left;
+      }
+    }
+
+    // value does not exist
+    return false;
+  };
+
+  public delete = (value: T): void => {
+    if (this.root && this.contains(value)) {
+      this.root = this._delete(value, this.root);
+    }
+  };
+
   public insert = (value: T): void => {
+    if (this.contains(value)) return;
+
     const node = new Node(value);
 
     if (!this.root) {
@@ -64,32 +92,80 @@ class BinarySearchTree<T> {
     }
   };
 
-  public search = (value: T): T | null => {
-    let currentNode: Node<T> | undefined = this.root;
+  private _delete = (value: T, node?: Node<T>): Node<T> | undefined => {
+    if (node === undefined) {
+      // base case: reached the bottom of the tree
+      return undefined;
+    } else if (value < node.value) {
+      // recursvely update the left sub-tree
+      node.left = this._delete(value, node.left);
 
-    while (currentNode) {
-      if (value === currentNode.value) {
-        // base case: found the value
-        return currentNode.value;
-      } else if (value > currentNode.value) {
-        // search less than
-        currentNode = currentNode.right;
+      return node;
+    } else if (value > node.value) {
+      // recursvely update the right sub-tree
+      node.right = this._delete(value, node.right);
+
+      return node;
+    } else if (value === node.value) {
+      // handle all cases of removing the node
+      if (node.left === undefined) {
+        // if there's no left child, move the right child up to take the nodes
+        // place (it could be undefined, and thus hit the base case)
+
+        return node.right;
+      } else if (node.right === undefined) {
+        // same as the above case for no right child
+
+        return node.left;
       } else {
-        // search greater than
-        currentNode = currentNode.left;
+        // if the node has 2 children, replace the current node's value with
+        // its successor
+        node.right = this._findSuccessor(node.right, node);
+
+        return node;
       }
     }
+  };
 
-    return null;
+  private _findSuccessor = (
+    currentNode: Node<T>,
+    nodeToDelete: Node<T>
+  ): Node<T> | undefined => {
+    if (currentNode.left) {
+      // if there is a left child, recursively traverse down while passing the
+      // value to delete with it
+      currentNode.left = this._findSuccessor(currentNode.left, nodeToDelete);
+
+      return currentNode;
+    } else {
+      // no left child means the current node is the successor and it overwrites
+      // the node to delete's value
+      nodeToDelete.value = currentNode.value;
+
+      // return the successors right child to use as its parents left child to
+      // connect all the remaining values in the tree
+      return currentNode.right;
+    }
   };
 }
 
-test("insert & search", (t) => {
+test("insert", (t) => {
+  const bst = new BinarySearchTree();
+  bst.insert(1337);
+
+  t.is(bst.contains(1337), true);
+  t.is(bst.contains(420), false);
+});
+
+test("delete", (t) => {
   const bst = new BinarySearchTree();
   bst.insert(420);
   bst.insert(1337);
+  bst.insert(69);
+  bst.insert(88);
+  bst.insert(100);
+  bst.delete(88);
 
-  t.is(bst.search(420), 420);
-  t.is(bst.search(1337), 1337);
-  t.is(bst.search(69), null);
+  t.is(bst.contains(88), false);
+  t.is(bst.contains(100), true);
 });
