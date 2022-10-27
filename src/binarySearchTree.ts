@@ -51,14 +51,12 @@ class BinarySearchTree<T> {
   };
 
   public delete = (value: T): void => {
-    if (this.root && this.contains(value)) {
+    if (this.root) {
       this.root = this._delete(value, this.root);
     }
   };
 
   public insert = (value: T): void => {
-    if (this.contains(value)) return;
-
     const node = new Node(value);
 
     if (!this.root) {
