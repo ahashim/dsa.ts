@@ -30,6 +30,12 @@ test("Node", (t) => {
 class BinarySearchTree<T> {
   private root?: Node<T>;
 
+  constructor(initialValue?: T) {
+    if (initialValue) {
+      this.root = new Node(initialValue);
+    }
+  }
+
   public contains = (value: T): boolean => {
     let currentNode = this.root;
 
@@ -85,6 +91,9 @@ class BinarySearchTree<T> {
             // go one level deeper
             currentNode = currentNode.left;
           }
+        } else {
+          // value already exists
+          return;
         }
       }
     }
@@ -149,6 +158,7 @@ class BinarySearchTree<T> {
 
 test("insert", (t) => {
   const bst = new BinarySearchTree();
+
   bst.insert(1337);
 
   t.is(bst.contains(1337), true);
@@ -156,14 +166,12 @@ test("insert", (t) => {
 });
 
 test("delete", (t) => {
-  const bst = new BinarySearchTree();
-  bst.insert(420);
-  bst.insert(1337);
-  bst.insert(69);
-  bst.insert(88);
-  bst.insert(100);
-  bst.delete(88);
+  const bst = new BinarySearchTree(420);
 
-  t.is(bst.contains(88), false);
-  t.is(bst.contains(100), true);
+  bst.insert(1337);
+  bst.insert(1337);
+  bst.delete(420);
+
+  t.is(bst.contains(420), false);
+  t.is(bst.contains(1337), true);
 });
