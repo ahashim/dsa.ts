@@ -31,7 +31,7 @@ class LinkedList<T> {
     }
   }
 
-  deleteAt = (index: number) => {
+  public deleteAt = (index: number) => {
     if (this.head) {
       // head of the list
       if (index === 0 && this.head.next) this.head = this.head.next;
@@ -58,7 +58,7 @@ class LinkedList<T> {
     }
   };
 
-  indexOf = (value: T): number | undefined => {
+  public indexOf = (value: T): number | undefined => {
     let currentIndex = 0;
     let currentNode = this.head;
 
@@ -72,7 +72,7 @@ class LinkedList<T> {
     return;
   };
 
-  insertAt = (index: number, value: T): void => {
+  public insertAt = (index: number, value: T): void => {
     if (this.head) {
       const newNode = new Node(value);
 
@@ -106,7 +106,7 @@ class LinkedList<T> {
     }
   };
 
-  read = (index: number): T | undefined => {
+  public read = (index: number): T | undefined => {
     if (this.head) {
       let currentIndex = 0;
       let currentNode: Node<T> | undefined = this.head;
@@ -124,7 +124,7 @@ class LinkedList<T> {
     }
   };
 
-  reverse = (): void => {
+  public reverse = (): void => {
     let currentNode = this.head,
       previousNode,
       nextNode;
