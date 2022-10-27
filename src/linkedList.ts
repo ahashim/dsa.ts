@@ -6,13 +6,7 @@ import test from "ava";
  * @space O(n)
  */
 class Node<T> {
-  public value: T;
-  public next: Node<T> | undefined;
-
-  constructor(nodeValue: T, nextNode: Node<T> | undefined = undefined) {
-    this.value = nodeValue;
-    this.next = nextNode;
-  }
+  constructor(public value: T, public next?: Node<T>) {}
 }
 
 test("Node", (t) => {
@@ -29,32 +23,44 @@ test("Node", (t) => {
  * @space O(n)
  */
 class LinkedList<T> {
-  public head: Node<T>;
+  public head?: Node<T>;
 
-  constructor(start: Node<T>) {
-    this.head = start;
+  constructor(initialValue?: Node<T>) {
+    if (initialValue) {
+      this.head = initialValue;
+    }
   }
 
   deleteAt = (index: number) => {
-    // head of the list
-    if (index === 0 && this.head.next) this.head = this.head.next;
+    if (this.head) {
+      // head of the list
+      if (index === 0 && this.head.next) this.head = this.head.next;
 
-    let currentIndex = 0;
-    let currentNode = this.head;
+      let currentIndex = 0;
+      let currentNode = this.head;
+      const desiredIndex = index - 2;
 
-    // move to node right before deletion
-    while (currentIndex < index - 1 && currentNode.next) {
-      currentNode = currentNode.next;
-      currentIndex++;
+      // traverse to two nodes right before the node to delete
+      while (currentIndex !== desiredIndex && currentNode.next) {
+        currentNode = currentNode.next;
+        currentIndex++;
+      }
+
+      // ensure we are before the node to delete
+      if (currentIndex === desiredIndex) {
+        // connect the nodes around the index to delete
+        currentNode.next = currentNode.next?.next;
+      } else {
+        throw outOfBoundsError;
+      }
+    } else {
+      throw outOfBoundsError;
     }
-
-    // connect the nodes around the index to delete
-    currentNode.next = currentNode.next?.next;
   };
 
   indexOf = (value: T): number | undefined => {
     let currentIndex = 0;
-    let currentNode: Node<T> | undefined = this.head;
+    let currentNode = this.head;
 
     while (currentNode) {
       if (currentNode?.value === value) return currentIndex;
@@ -67,46 +73,59 @@ class LinkedList<T> {
   };
 
   insertAt = (index: number, value: T): void => {
-    const newNode = new Node(value);
+    if (this.head) {
+      const newNode = new Node(value);
 
-    if (index === 0) {
-      // beginnning of the list
-      newNode.next = this.head;
-      this.head = newNode;
-    } else {
-      let currentIndex = 0;
-      let currentNode = this.head;
+      if (index === 0) {
+        // beginnning of the list
+        newNode.next = this.head;
+        this.head = newNode;
+      } else {
+        let currentIndex = 0;
+        let currentNode = this.head;
+        const desiredIndex = index - 1;
 
-      // get the node right before where we want to insert
-      while (currentIndex < index - 1 && currentNode.next) {
-        currentNode = currentNode.next;
-        currentIndex++;
+        // get the node right before where we want to insert
+        while (currentIndex < desiredIndex && currentNode?.next) {
+          currentNode = currentNode.next;
+          currentIndex++;
+        }
+
+        if (currentIndex === desiredIndex) {
+          // link the new node the one after the current node (now at the new index)
+          newNode.next = currentNode?.next;
+
+          // link the previous node to the new node to complete the list
+          currentNode.next = newNode;
+        } else {
+          throw outOfBoundsError;
+        }
       }
-
-      // link the new node the one after the current node (now at the new index)
-      newNode.next = currentNode?.next;
-
-      // link the previous node to the new node to complete the list
-      currentNode.next = newNode;
+    } else {
+      throw outOfBoundsError;
     }
   };
 
   read = (index: number): T | undefined => {
-    let currentIndex = 0;
-    let currentNode: Node<T> | undefined = this.head;
+    if (this.head) {
+      let currentIndex = 0;
+      let currentNode: Node<T> | undefined = this.head;
 
-    while (currentIndex < index) {
-      currentNode = currentNode.next;
-      currentIndex++;
+      while (currentIndex < index) {
+        currentNode = currentNode.next;
+        currentIndex++;
 
-      if (!currentNode) return;
+        if (!currentNode) return;
+      }
+
+      return currentNode.value;
+    } else {
+      throw outOfBoundsError;
     }
-
-    return currentNode.value;
   };
 
   reverse = (): void => {
-    let currentNode: Node<T> | undefined = this.head,
+    let currentNode = this.head,
       previousNode,
       nextNode;
 
@@ -140,10 +159,10 @@ test("deleteAt", (t) => {
 test("head", (t) => {
   const list = new LinkedList(nodesFromSentence("hello there!")[0]);
 
-  const actual = list.head.value;
+  const actual = list.head;
   const expected = "hello";
 
-  t.is(actual, expected);
+  t.is(actual?.value, expected);
 });
 
 test("indexOf", (t) => {
@@ -181,10 +200,10 @@ test("reverse", (t) => {
   );
   list.reverse();
 
-  const actual = list.head.value;
+  const actual = list.head;
   const expected = "interest";
 
-  t.is(actual, expected);
+  t.is(actual?.value, expected);
 });
 
 /*
@@ -201,3 +220,8 @@ const nodesFromSentence = (sentence: string): Node<string>[] => {
 
   return nodes;
 };
+
+/*
+ * @dev Out of bounds error for insertion & deletion.
+ */
+const outOfBoundsError = new Error("LinkedList: index out of bounds");
