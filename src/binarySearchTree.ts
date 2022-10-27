@@ -169,7 +169,7 @@ test("delete", (t) => {
   const bst = new BinarySearchTree(420);
 
   bst.insert(1337);
-  bst.delete(420);
+  bst.delete(420); // deleting the root
 
   t.is(bst.contains(420), false);
   t.is(bst.contains(1337), true);
