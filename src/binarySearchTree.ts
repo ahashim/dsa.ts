@@ -12,7 +12,7 @@ class Node<T> {
   constructor(public value: T) {}
 }
 
-test("Node", (t) => {
+test("nodes", (t) => {
   const node = new Node(420);
   node.left = new Node(69);
   node.right = new Node(1337);

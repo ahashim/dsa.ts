@@ -9,7 +9,7 @@ class Node<T> {
   constructor(public value: T, public next?: Node<T>) {}
 }
 
-test("Node", (t) => {
+test("nodes", (t) => {
   const [n1] = nodesFromSentence("hello world!");
   const actual = n1.next?.value;
   const expected = "world!";
