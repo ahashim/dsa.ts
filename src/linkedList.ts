@@ -19,7 +19,7 @@ test("nodes", (t) => {
 
 /*
  * @dev Implements a singly Linked List.
- * @time O(1)
+ * @time O(n)
  * @space O(n)
  */
 class LinkedList<T> {
