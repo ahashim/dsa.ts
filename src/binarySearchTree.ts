@@ -1,7 +1,7 @@
 import test from "ava";
 
 /*
- * @dev Implements a node with left & right children.
+ * @dev Implements a tree node with left & right children.
  * @time O(1)
  * @space O(n)
  */
@@ -9,7 +9,7 @@ class Node<T> {
   public left?: Node<T>;
   public right?: Node<T>;
 
-  constructor(public value: T) {}
+  constructor(public value: T) { }
 }
 
 test("nodes", (t) => {

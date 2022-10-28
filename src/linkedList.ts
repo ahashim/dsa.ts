@@ -1,12 +1,10 @@
 import test from "ava";
 
 /*
- * @dev Implements a Node within a linked list.
- * @time O(1)
- * @space O(n)
+ * @dev Implements a node within a linked list.
  */
 class Node<T> {
-  constructor(public value: T, public next?: Node<T>) {}
+  constructor(public value: T, public next?: Node<T>) { }
 }
 
 test("nodes", (t) => {
