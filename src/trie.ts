@@ -49,6 +49,20 @@ class Trie {
     currentNode.isWord = true;
   };
 
+  public traverse = (
+    currentNode: Trie = this,
+    characters: string[] = []
+  ): string[] => {
+    for (const [character, childNode] of Object.entries(currentNode.children)) {
+      // capture current character
+      characters.push(character);
+
+      if (!childNode.isWord) this.traverse(childNode, characters);
+    }
+
+    return characters;
+  };
+
   private gatherWordsAt = (
     currentNode: Trie = this,
     currentWord = "",
@@ -115,4 +129,14 @@ test("insert", (t) => {
   t.is(trie.contains("cat"), true);
   t.is(trie.contains("catcher"), true);
   t.is(trie.contains("can"), false);
+});
+
+test("traverse", (t) => {
+  const trie = new Trie();
+
+  trie.insert("luke");
+  trie.insert("leia");
+  trie.insert("lee");
+
+  t.deepEqual(trie.traverse(), ["l", "u", "k", "e", "e", "i", "a", "e"]);
 });
