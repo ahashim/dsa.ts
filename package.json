@@ -25,6 +25,7 @@
     "@typescript-eslint/parser": "^5.39.0",
     "ava": "^4.3.3",
     "eslint": ">=8.0.0",
+    "eslint-plugin-sonarjs": "^0.16.0",
     "ts-node": "^10.9.1"
   }
 }

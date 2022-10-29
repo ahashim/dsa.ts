@@ -6,6 +6,7 @@ specifiers:
   '@typescript-eslint/parser': ^5.39.0
   ava: ^4.3.3
   eslint: '>=8.0.0'
+  eslint-plugin-sonarjs: ^0.16.0
   ts-node: ^10.9.1
 
 devDependencies:
@@ -14,6 +15,7 @@ devDependencies:
   '@typescript-eslint/parser': 5.39.0_ypn2ylkkyfa5i233caldtndbqa
   ava: 4.3.3_@ava+typescript@3.0.1
   eslint: 8.24.0
+  eslint-plugin-sonarjs: 0.16.0_eslint@8.24.0
   ts-node: 10.9.1_5ra3kupzwcghzakkfdrtyjk72u
 
 packages:
@@ -703,6 +705,15 @@ packages:
   /escape-string-regexp/5.0.0:
     resolution: {integrity: sha512-/veY75JbMK4j1yjvuUxuVsiS/hr/4iHs9FTT6cgTexxdE0Ly/glccBAkloH/DofkjRbZU3bnoj38mOmhkZ0lHw==}
     engines: {node: '>=12'}
+    dev: true
+
+  /eslint-plugin-sonarjs/0.16.0_eslint@8.24.0:
+    resolution: {integrity: sha512-al8ojAzcQW8Eu0tWn841ldhPpPcjrJ59TzzTfAVWR45bWvdAASCmrGl8vK0MWHyKVDdC0i17IGbtQQ1KgxLlVA==}
+    engines: {node: '>=14'}
+    peerDependencies:
+      eslint: ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0
+    dependencies:
+      eslint: 8.24.0
     dev: true
 
   /eslint-scope/5.1.1:
