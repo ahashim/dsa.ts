@@ -16,10 +16,33 @@ class Trie {
 
     if (currentNode) {
       // get words stemming from the prefix node
-      return this.gatherWordsAt(currentNode).map((word) => prefix + word);
+      return this.gatherWordsAt(currentNode).map((suffix) => prefix + suffix);
     } else {
       // prefix is not in the trie
       return [];
+    }
+  };
+
+  public autoCorrect = (word: string): string | undefined => {
+    // track how much of the word has been found so far
+    let currentWord = "",
+      currentNode: Trie = this;
+
+    for (let i = 0; i < word.length; i++) {
+      if (currentNode.children[word[i]]) {
+        // update the current word
+        currentWord += word[i];
+
+        // follow the child node
+        currentNode = currentNode.children[word[i]];
+      } else {
+        // the current character in the word is not found, so fallback to the
+        // current word so far & gather possible words from that node &  return
+        // the first suggestion
+        return this.gatherWordsAt(currentNode).map(
+          (suffix) => currentWord + suffix
+        )[0];
+      }
     }
   };
 
@@ -112,10 +135,17 @@ test("autoComplete", (t) => {
   trie.insert("bald");
   trie.insert("ball");
 
-  const actual = trie.autoComplete("bal");
-  const expected = ["balance", "bald", "ball"];
+  t.deepEqual(trie.autoComplete("bal"), ["balance", "bald", "ball"]);
+});
 
-  t.deepEqual(actual, expected);
+test("autoCorrect", (t) => {
+  const trie = new Trie();
+
+  trie.insert("cat");
+  trie.insert("catnap");
+  trie.insert("catnip");
+
+  t.is(trie.autoCorrect("catnar"), "catnap");
 });
 
 test("insert", (t) => {
