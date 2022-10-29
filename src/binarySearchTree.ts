@@ -9,7 +9,7 @@ class Node<T> {
   public left?: Node<T>;
   public right?: Node<T>;
 
-  constructor(public value: T) { }
+  constructor(public value: T) {}
 }
 
 test("nodes", (t) => {

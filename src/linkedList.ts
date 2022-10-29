@@ -4,7 +4,7 @@ import test from "ava";
  * @dev Implements a node within a linked list.
  */
 class Node<T> {
-  constructor(public value: T, public next?: Node<T>) { }
+  constructor(public value: T, public next?: Node<T>) {}
 }
 
 test("nodes", (t) => {
