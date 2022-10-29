@@ -136,7 +136,7 @@ test("traverse", (t) => {
 
   trie.insert("luke");
   trie.insert("leia");
-  trie.insert("lee");
+  trie.insert("leon");
 
-  t.deepEqual(trie.traverse(), ["l", "u", "k", "e", "e", "i", "a", "e"]);
+  t.deepEqual(trie.traverse(), ["l", "u", "k", "e", "e", "i", "a", "o", "n"]);
 });
