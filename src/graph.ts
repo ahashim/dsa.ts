@@ -103,7 +103,7 @@ const dfs = (
 
 test("dfs", (t) => {
   // test if a vertex with the value "Irene" exists in the graph
-  t.deepEqual(!!dfs(generateSocialGraph(), "Irene")?.value, true);
+  t.is(!!dfs(generateSocialGraph(), "Irene")?.value, true);
 });
 
 /*
