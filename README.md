@@ -1,13 +1,15 @@
-# dsa.ts 
+# dsa.ts
 
-Common computer science algorithms & data structures implemented & tested in TypeScript.
+Computer science data structures & algorithms implemented in TypeScript.
 
-## Test
-```ts
+## Unit tests
+
+```zsh
 npm run test
 ```
 
-## Watch & Develop
-```ts
+## Watch mode
+
+```zsh
 npm run watch
 ```
