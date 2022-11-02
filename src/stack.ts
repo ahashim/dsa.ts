@@ -16,8 +16,6 @@ class Stack<T> {
 
 /*
  * @dev Reverses a string using a stack
- * @time O(n)
- * @space O(n)
  */
 const reverse = (str: string): string => {
   const stack: Stack<string> = new Stack();

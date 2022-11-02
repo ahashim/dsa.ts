@@ -2,8 +2,6 @@ import test from "ava";
 
 /*
  * @dev Recursively count the number of characters in an array of strings.
- * @time O(n)
- * @space O(n)
  */
 const characterCount = (arr: string[]): number => {
   return arr.length === 1
@@ -20,8 +18,6 @@ test("characterCount", (t) => {
 
 /*
  * @dev Recursively select even numbers from an array.
- * @time O(n)
- * @space O(n)
  */
 const selectEven = (arr: number[]): number[] => {
   if (arr.length === 0) return arr; // base case
@@ -40,8 +36,6 @@ test("selectEven", (t) => {
 
 /*
  * @dev Recursively calculate "triangle" numbers.
- * @time O(n)
- * @space O(n)
  */
 const triangle = (n: number): number => {
   return n == 1
@@ -58,8 +52,6 @@ test("triangle", (t) => {
 
 /*
  * @dev Recursively find index of the letter "x" within a string.
- * @time O(n)
- * @space O(n)
  */
 const indexOfX = (str: string): number => {
   return str[0] === "x"
@@ -84,8 +76,6 @@ test("indexOfX", (t) => {
  * +--+--+--+--+--+--+--+
  * |  |  |  |  |  |  |XX|
  * +--+--+--+--+--+--+--+
- * @time O(n)
- * @space O(n)
  */
 const uniquePaths = (rows: number, cols: number): number => {
   return rows === 1 || cols === 1

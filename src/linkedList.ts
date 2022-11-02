@@ -17,8 +17,6 @@ test("nodes", (t) => {
 
 /*
  * @dev Implements a singly Linked List.
- * @time O(n)
- * @space O(n)
  */
 class LinkedList<T> {
   public head?: Node<T>;
@@ -206,8 +204,6 @@ test("reverse", (t) => {
 
 /*
  * @dev Helper function to generate a linked list of nodes from a sentence.
- * @time O(n)
- * @space O(n)
  */
 const nodesFromSentence = (sentence: string): Node<string>[] => {
   // create nodes from words

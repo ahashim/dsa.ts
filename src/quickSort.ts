@@ -2,8 +2,6 @@ import test from "ava";
 
 /*
  * @dev Implements quickSort on an array of numbers.
- * @time O(n*log(n))
- * @space O(n)
  */
 class QuickSortable {
   private items: number[];
@@ -80,8 +78,6 @@ test("quickSort", (t) => {
 
 /*
  * @dev Finds the greatest product of 3 numbers from an array using quicksort.
- * @time O(n*log(n))
- * @space O(n)
  */
 const greatestProductOf3 = (arr: number[]): number => {
   const sorted = new QuickSortable(arr).sort();
@@ -102,8 +98,6 @@ test("greatestProductOf3", (t) => {
 
 /*
  * @dev Finds the missing number in a linearly filled array using quicksort.
- * @time O(n*log(n))
- * @space O(n)
  */
 const findMissingNumber = (arr: number[]): number | null => {
   const sorted = new QuickSortable(arr).sort();

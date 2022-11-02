@@ -2,8 +2,6 @@ import test from "ava";
 
 /*
  * @dev Intersection of two numeric arrays.
- * @time O(n)
- * @space O(n)
  */
 const getIntersection = (arr1: number[], arr2: number[]): number[] => {
   // types
@@ -48,8 +46,6 @@ test("getIntersection", (t) => {
 
 /*
  * @dev Find the first duplicate character.
- * @time O(n)
- * @space O(n)
  */
 const findDuplicate = (arr: string[]): string => {
   // types
@@ -78,8 +74,6 @@ test("findDuplicate", (t) => {
 
 /*
  * @dev Find missing alphabetic letters from a string.
- * @time O(n)
- * @space O(n)
  */
 const findMissingLetters = (str: string): string => {
   // types
@@ -173,8 +167,6 @@ test("findMissingLetters", (t) => {
 
 /*
  * @dev Find the first non-duplicate character.
- * @time O(n)
- * @space O(n)
  */
 const firstNonDuplicate = (str: string): string => {
   // types

@@ -2,8 +2,6 @@ import test from "ava";
 
 /*
  * @dev Implements a binary max heap using an array.
- * @time O(log(n))
- * @space O(n)
  */
 class Heap<T> {
   private data: Array<T> = [];

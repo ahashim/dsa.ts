@@ -2,8 +2,6 @@ import test from "ava";
 
 /*
  * @dev Implements a tree node with left & right children.
- * @time O(1)
- * @space O(n)
  */
 class Node<T> {
   public left?: Node<T>;
@@ -24,8 +22,6 @@ test("nodes", (t) => {
 
 /*
  * @dev Implements a binary search tree.
- * @time O(log(n))
- * @space O(n)
  */
 class BinarySearchTree<T> {
   private root?: Node<T>;
