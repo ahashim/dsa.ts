@@ -80,7 +80,6 @@ const bfs = (
 };
 
 test("bfs", (t) => {
-  // test if a vertex with the value "Irene" exists in the graph
   const actual = !!bfs(generateSocialGraph(), "Evan")?.value;
   const expected = true;
 
@@ -182,7 +181,6 @@ const dfs = (
 };
 
 test("dfs", (t) => {
-  // test if a vertex with the value "Irene" exists in the graph
   const actual = !!dfs(generateSocialGraph(), "Jon")?.value;
   const expected = true;
 
