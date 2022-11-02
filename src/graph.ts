@@ -137,6 +137,7 @@ test("bfsTraverse", (t) => {
     "Carlos",
     "Daphne",
     "Evan",
+    "Jon",
     "Fred",
     "Hans",
     "Gina",
@@ -226,6 +227,7 @@ test("dfsTraverse", (t) => {
     "Carlos",
     "Daphne",
     "Evan",
+    "Jon",
     "Gina",
     "Irene",
   ];
@@ -235,34 +237,33 @@ test("dfsTraverse", (t) => {
 
 /*
  * @dev Helper function to generate a social graph of users:
- *
- *   ┌─────────────────────┐
- *   │        ahmed        │
- *   └△△─△△──────────△△△──△┘
- *    ││ ││          │││ ┌┴─────┐
- *    ││ ││          │││ │barbie│
- *    ││ ││          │││ └△△────┘
- *    ││ ││         ┌┴┴┴─┐││
- *    ││ ││         │evan│││
- *    ││ ││         └┬┬──┘││
- *    ││ ││┌────┐    ││   ││
- *    ││ │││gina│    ││   ││
- *    ││ ││└┬┬─△┘    ││   ││
- *    ││ ││ ││┌┴────┐││   ││
- *    ││ ││ │││irene│││   ││
- *    ││ ││ ││└─────┘││   ││
- *    ││┌┴┴─▽▽───────▽▽─┐ ││
- *    │││    daphne     │ ││
- *    ││└───────────────┘ ││
- *    ││┌──────┐          ││
- *    │││ hans │          ││
- *    ││└┬───┬┬┘          ││
- *   ┌┴┴─▽──┐││           ││
- *   │carlos│││           ││
- *   └──────┘││           ││
- *   ┌───────▽▽───────────┴┴─┐
- *   │         fred          │
- *   └───────────────────────┘
+ *                                  ┌─────┐
+ *    ┌───────────────────┬─────────┤Ahmed├───────┬─────────────────────────┐
+ *    │                   │         └──┬──┘       │                         │
+ *    │                   │            │          │                         │
+ *    │                   │            │          │                         │
+ *    │                   │            │          │                         │
+ * ┌──┴───┐            ┌──┴───┐        │       ┌──┴───┐                  ┌──┴─┐
+ * │Barbie│            │Carlos│        │       │Daphne├──────────────────┤Evan│
+ * └──┬───┘            └──┬───┘        │       └──┬───┘                  └──┬─┘
+ *    │                   │            │          │                         │
+ *    │                   │            │          │                         │
+ *    │                   │            │          │                         │
+ *    │                   │            │          │                         │
+ * ┌──┴─┐                 │            │       ┌──┴─┐                       │
+ * │Fred│                 │            │       │Gina│                       │
+ * └──┬─┘                 │            │       └──┬─┘                       │
+ *    │                   │            │          │                         │
+ *    │                   │            │          │                         │
+ *    │                   │            │          │                         │
+ * ┌──┴─┐                 │            │       ┌──┴──┐                      │
+ * │Hans├─────────────────┘            │       │Irene│                      │
+ * └────┘                              │       └──┬──┘                      │
+ *                                     │          │                         │
+ *                                     │          │                         │
+ *                                     │       ┌──┴┐                        │
+ *                                     └───────┤Jon├────────────────────────┘
+ *                                             └───┘
  */
 const generateSocialGraph = (): Vertex<string> => {
   const ahmed = new Vertex("Ahmed");
@@ -274,16 +275,18 @@ const generateSocialGraph = (): Vertex<string> => {
   const gina = new Vertex("Gina");
   const hans = new Vertex("Hans");
   const irene = new Vertex("Irene");
+  const jon = new Vertex("Jon");
 
-  ahmed.addAdjacentVertices([barbie, carlos, daphne, evan]);
+  ahmed.addAdjacentVertices([barbie, carlos, daphne, evan, jon]);
   barbie.addAdjacentVertices([ahmed, fred]);
   carlos.addAdjacentVertices([ahmed, hans]);
   daphne.addAdjacentVertices([ahmed, evan, gina]);
-  evan.addAdjacentVertices([ahmed, daphne]);
+  evan.addAdjacentVertices([ahmed, daphne, jon]);
   fred.addAdjacentVertices([barbie, hans]);
   gina.addAdjacentVertices([daphne, irene]);
   hans.addAdjacentVertices([carlos, fred]);
-  irene.addAdjacentVertices([gina]);
+  irene.addAdjacentVertices([gina, jon]);
+  jon.addAdjacentVertices([ahmed, evan]);
 
   // return ahmed as the starting vertex
   return ahmed;
