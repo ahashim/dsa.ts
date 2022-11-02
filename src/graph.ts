@@ -10,6 +10,13 @@ class Vertex<T> {
     this.adjacentVertices.push(...vertices);
 }
 
+/*
+ * @dev Represents a hashtable of visited vertice values.
+ */
+type Visited = {
+  [key: string]: boolean;
+};
+
 test("vertices", (t) => {
   const ahmed = new Vertex("Ahmed");
   const barbie = new Vertex("Barbie");
@@ -23,18 +30,119 @@ test("vertices", (t) => {
 });
 
 /*
- * @dev Depth first traversal in a graph of vertices.
+ * @dev Traverse a graph using breadth-first search.
+ */
+const bfsTraverse = (start: Vertex<string>): string[] => {
+  const output: string[] = []; // output values
+  const queue: Vertex<string>[] = []; // vertices to visit
+  const visited: Visited = {}; // vertices already visited
+
+  // mark starting vertex as visited
+  visited[start.value] = true;
+
+  // add it to the queue to traverse its neighbors
+  queue.push(start);
+
+  // while queue has items
+  while (queue.length) {
+    // remove first item off of the queue and make it the current vertex
+    const currentVertex = queue.shift();
+
+    if (currentVertex) {
+      // add it to the output values
+      output.push(currentVertex?.value);
+
+      // iterate over adjacent vertices
+      for (let i = 0; i < currentVertex.adjacentVertices.length; i++) {
+        const neighbor = currentVertex.adjacentVertices[i];
+
+        // if neighbor has not been visited
+        if (!visited[neighbor.value]) {
+          // mark it as visited
+          visited[neighbor.value] = true;
+
+          // add it to the queue to traverse its neighbors
+          queue.push(neighbor);
+        }
+      }
+    }
+  }
+
+  return output;
+};
+
+test("bfsTraverse", (t) => {
+  const actual = bfsTraverse(generateSocialGraph());
+  const expected = [
+    "Ahmed",
+    "Barbie",
+    "Carlos",
+    "Daphne",
+    "Evan",
+    "Fred",
+    "Hans",
+    "Gina",
+    "Irene",
+  ];
+
+  t.deepEqual(actual, expected);
+});
+
+/*
+ * @dev Depth-first search for a specific vertex in a graph.
+ */
+const dfs = (
+  vertex: Vertex<string>,
+  searchTerm: string,
+  visited: Visited = {}
+): Vertex<string> | undefined => {
+  // base case: vertex has the search value
+  if (vertex.value === searchTerm) return vertex;
+
+  // mark vertex as visited
+  visited[vertex.value] = true;
+
+  for (let i = 0; i < vertex.adjacentVertices.length; i++) {
+    const neighbor = vertex.adjacentVertices[i];
+
+    // skip the vertex if its been visited
+    if (!visited[neighbor.value]) {
+      // base case: the neighbor vertex has the search value
+      if (neighbor.value === searchTerm) return neighbor;
+
+      // recursively search neighbor's vertices
+      const foundVertex = dfs(neighbor, searchTerm, visited);
+
+      // return the found vertex if it exists
+      if (foundVertex) return foundVertex;
+    }
+  }
+
+  // vertex does not exist in the graph
+  return undefined;
+};
+
+test("dfs", (t) => {
+  // test if a vertex with the value "Irene" exists in the graph
+  const actual = !!dfs(generateSocialGraph(), "Irene")?.value;
+  const expected = true;
+
+  t.is(actual, expected);
+});
+
+/*
+ * @dev Traverse a graph using depth-first search.
  */
 const dfsTraverse = (
   vertex: Vertex<string>,
   visited: { [key: string]: boolean } = {},
-  values: string[] = []
+  output: string[] = []
 ): string[] => {
   // mark the vertex as visited
   visited[vertex.value] = true;
 
   // add it to the output array
-  values.push(vertex.value);
+  output.push(vertex.value);
 
   // iterate over adjacent vertices
   for (let i = 0; i < vertex.adjacentVertices.length; i++) {
@@ -43,11 +151,11 @@ const dfsTraverse = (
     // skip vertices that have already been seen
     if (!visited[neighbor.value]) {
       // recurse & pass visited + values seen so far
-      dfsTraverse(neighbor, visited, values);
+      dfsTraverse(neighbor, visited, output);
     }
   }
 
-  return values;
+  return output;
 };
 
 test("dfsTraverse", (t) => {
@@ -65,45 +173,6 @@ test("dfsTraverse", (t) => {
   ];
 
   t.deepEqual(actual, expected);
-});
-
-/*
- * @dev Depth first search for a specific vertex in a graph.
- */
-const dfs = (
-  vertex: Vertex<string>,
-  search: string,
-  visited: { [key: string]: boolean } = {}
-): Vertex<string> | null => {
-  // base case: vertex has the search value
-  if (vertex.value === search) return vertex;
-
-  // mark vertex as visited
-  visited[vertex.value] = true;
-
-  for (let i = 0; i < vertex.adjacentVertices.length; i++) {
-    const neighbor = vertex.adjacentVertices[i];
-
-    // skip the vertex if its been visited
-    if (visited[neighbor.value]) continue;
-
-    // base case: the neighbor vertex has the search value
-    if (neighbor.value === search) return neighbor;
-
-    // recursively search neighbor's vertices
-    const foundVertex = dfs(neighbor, search, visited);
-
-    // return the found vertex if it exists
-    if (foundVertex) return foundVertex;
-  }
-
-  // vertex does not exist in the graph
-  return null;
-};
-
-test("dfs", (t) => {
-  // test if a vertex with the value "Irene" exists in the graph
-  t.is(!!dfs(generateSocialGraph(), "Irene")?.value, true);
 });
 
 /*
