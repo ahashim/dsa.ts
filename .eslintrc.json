@@ -16,6 +16,7 @@
   },
   "plugins": ["sonarjs", "@typescript-eslint"],
   "rules": {
+    "sonarjs/cognitive-complexity": ["error", 20],
     "@typescript-eslint/no-this-alias": [
       "error",
       {

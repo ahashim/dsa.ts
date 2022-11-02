@@ -30,6 +30,61 @@ test("vertices", (t) => {
 });
 
 /*
+ * @dev Breadth-first search for a value in a graph
+ */
+const bfs = (
+  start: Vertex<string>,
+  searchTerm: string
+): Vertex<string> | undefined => {
+  // return if the starting vertex has the search term
+  if (start.value === searchTerm) return start;
+
+  const queue: Vertex<string>[] = []; // vertices to visit
+  const visited: Visited = {}; // vertices already visited
+
+  // mark starting vertex as visited
+  visited[start.value];
+
+  // add it to the queue to check its neighbors
+  queue.push(start);
+
+  // while the queue has items
+  while (queue.length) {
+    // get the first vertex
+    const currentVertex = queue.shift();
+
+    if (currentVertex) {
+      // iterate over adjacent vertices
+      for (let i = 0; i < currentVertex.adjacentVertices.length; i++) {
+        const neighbor = currentVertex.adjacentVertices[i];
+
+        // if the vertex has not been visited
+        if (!visited[neighbor.value]) {
+          // return if a neighbor has the search term
+          if (neighbor.value === searchTerm) return neighbor;
+
+          // mark it as visited
+          visited[neighbor.value] = true;
+
+          // add it to the queue to traverse its neighbors
+          queue.push(neighbor);
+        }
+      }
+    }
+  }
+
+  return undefined;
+};
+
+test("bfs", (t) => {
+  // test if a vertex with the value "Irene" exists in the graph
+  const actual = !!bfs(generateSocialGraph(), "Irene")?.value;
+  const expected = true;
+
+  t.is(actual, expected);
+});
+
+/*
  * @dev Traverse a graph using breadth-first search.
  */
 const bfsTraverse = (start: Vertex<string>): string[] => {
