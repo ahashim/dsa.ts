@@ -54,6 +54,9 @@ const bfs = (
     const currentVertex = queue.shift();
 
     if (currentVertex) {
+      // return if the current vertex in the queue has the search term
+      if (currentVertex.value === searchTerm) return currentVertex;
+
       // iterate over adjacent vertices
       for (let i = 0; i < currentVertex.adjacentVertices.length; i++) {
         const neighbor = currentVertex.adjacentVertices[i];
