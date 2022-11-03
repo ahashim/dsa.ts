@@ -4,10 +4,9 @@ import test from "ava";
  * @dev Implements a vertex in a graph.
  */
 class Vertex<T> {
-  constructor(public value: T, public adjacentVertices: Vertex<T>[] = []) {}
+  constructor(public value: T, public edges: Vertex<T>[] = []) {}
 
-  public addEdges = (vertices: Vertex<T>[]) =>
-    this.adjacentVertices.push(...vertices);
+  public addEdges = (vertices: Vertex<T>[]) => this.edges.push(...vertices);
 }
 
 /*
@@ -25,8 +24,8 @@ test("vertices", (t) => {
   ahmed.addEdges([barbie, carlos]);
 
   t.is(ahmed.value, "Ahmed");
-  t.is(ahmed.adjacentVertices[0].value, "Barbie");
-  t.is(ahmed.adjacentVertices[1].value, "Carlos");
+  t.is(ahmed.edges[0], barbie);
+  t.is(ahmed.edges[1], carlos);
 });
 
 /*
@@ -58,8 +57,8 @@ const bfs = (
       if (currentVertex.value === searchTerm) return currentVertex;
 
       // iterate over adjacent vertices
-      for (let i = 0; i < currentVertex.adjacentVertices.length; i++) {
-        const neighbor = currentVertex.adjacentVertices[i];
+      for (let i = 0; i < currentVertex.edges.length; i++) {
+        const neighbor = currentVertex.edges[i];
 
         // if the vertex has not been visited
         if (!visited[neighbor.value]) {
@@ -110,8 +109,8 @@ const bfsTraverse = (start: Vertex<string>): string[] => {
       output.push(currentVertex?.value);
 
       // iterate over adjacent vertices
-      for (let i = 0; i < currentVertex.adjacentVertices.length; i++) {
-        const neighbor = currentVertex.adjacentVertices[i];
+      for (let i = 0; i < currentVertex.edges.length; i++) {
+        const neighbor = currentVertex.edges[i];
 
         // if neighbor has not been visited
         if (!visited[neighbor.value]) {
@@ -160,8 +159,8 @@ const dfs = (
   // mark vertex as visited
   visited[vertex.value] = true;
 
-  for (let i = 0; i < vertex.adjacentVertices.length; i++) {
-    const neighbor = vertex.adjacentVertices[i];
+  for (let i = 0; i < vertex.edges.length; i++) {
+    const neighbor = vertex.edges[i];
 
     // skip the vertex if its been visited
     if (!visited[neighbor.value]) {
@@ -202,8 +201,8 @@ const dfsTraverse = (
   output.push(vertex.value);
 
   // iterate over adjacent vertices
-  for (let i = 0; i < vertex.adjacentVertices.length; i++) {
-    const neighbor = vertex.adjacentVertices[i];
+  for (let i = 0; i < vertex.edges.length; i++) {
+    const neighbor = vertex.edges[i];
 
     // skip vertices that have already been seen
     if (!visited[neighbor.value]) {
