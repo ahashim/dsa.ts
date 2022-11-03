@@ -33,7 +33,7 @@ class Vertex<T> {
       }
     }
 
-    // vertex is not in adjacentVertices
+    // vertex is not in edges
     return undefined;
   };
 }
