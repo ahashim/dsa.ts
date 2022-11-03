@@ -10,6 +10,7 @@ class Vertex<T> {
   ) {}
 
   public addEdge = (vertex: Vertex<T>, weight: number) => {
+    // edges are keyed by weight
     if (weight in this.adjacentVertices) {
       this.adjacentVertices[weight].push(vertex);
     } else {
