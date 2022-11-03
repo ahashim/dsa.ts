@@ -6,9 +6,7 @@ import test from "ava";
 class Vertex<T> {
   constructor(
     public value: T,
-    public adjacentVertices: {
-      [key: number]: Vertex<T>[];
-    } = {}
+    public adjacentVertices: { [key: number]: Vertex<T>[] } = {}
   ) {}
 
   public addEdge = (vertex: Vertex<T>, weight: number) => {
