@@ -6,7 +6,7 @@ import test from "ava";
 class Vertex<T> {
   constructor(public value: T, public adjacentVertices: Vertex<T>[] = []) {}
 
-  public addAdjacentVertices = (vertices: Vertex<T>[]) =>
+  public addEdges = (vertices: Vertex<T>[]) =>
     this.adjacentVertices.push(...vertices);
 }
 
@@ -22,7 +22,7 @@ test("vertices", (t) => {
   const barbie = new Vertex("Barbie");
   const carlos = new Vertex("Carlos");
 
-  ahmed.addAdjacentVertices([barbie, carlos]);
+  ahmed.addEdges([barbie, carlos]);
 
   t.is(ahmed.value, "Ahmed");
   t.is(ahmed.adjacentVertices[0].value, "Barbie");
@@ -275,16 +275,16 @@ const generateSocialGraph = (): Vertex<string> => {
   const irene = new Vertex("Irene");
   const jon = new Vertex("Jon");
 
-  ahmed.addAdjacentVertices([barbie, carlos, daphne, evan, jon]);
-  barbie.addAdjacentVertices([ahmed, fred]);
-  carlos.addAdjacentVertices([ahmed, hans]);
-  daphne.addAdjacentVertices([ahmed, evan, gina]);
-  evan.addAdjacentVertices([ahmed, daphne, jon]);
-  fred.addAdjacentVertices([barbie, hans]);
-  gina.addAdjacentVertices([daphne, irene]);
-  hans.addAdjacentVertices([carlos, fred]);
-  irene.addAdjacentVertices([gina, jon]);
-  jon.addAdjacentVertices([ahmed, evan]);
+  ahmed.addEdges([barbie, carlos, daphne, evan, jon]);
+  barbie.addEdges([ahmed, fred]);
+  carlos.addEdges([ahmed, hans]);
+  daphne.addEdges([ahmed, evan, gina]);
+  evan.addEdges([ahmed, daphne, jon]);
+  fred.addEdges([barbie, hans]);
+  gina.addEdges([daphne, irene]);
+  hans.addEdges([carlos, fred]);
+  irene.addEdges([gina, jon]);
+  jon.addEdges([ahmed, evan]);
 
   // return ahmed as the starting vertex
   return ahmed;
