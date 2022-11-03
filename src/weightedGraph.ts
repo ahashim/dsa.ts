@@ -19,13 +19,13 @@ class Vertex<T> {
 }
 
 test("vertices", (t) => {
-  const ahmed = new Vertex("Ahmed");
-  const barbie = new Vertex("Barbie");
-  const carlos = new Vertex("Carlos");
+  const atlanta = new Vertex("Atlanta");
+  const boston = new Vertex("Boston");
+  const chicago = new Vertex("Chicago");
 
-  ahmed.addEdge(barbie, 100);
-  ahmed.addEdge(carlos, 30);
+  atlanta.addEdge(boston, 100);
+  atlanta.addEdge(chicago, 30);
 
-  t.is(ahmed.adjacentVertices[100][0], barbie);
-  t.is(ahmed.adjacentVertices[30][0], carlos);
+  t.is(atlanta.adjacentVertices[100][0], boston);
+  t.is(atlanta.adjacentVertices[30][0], chicago);
 });
