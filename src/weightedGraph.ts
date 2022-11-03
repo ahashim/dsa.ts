@@ -6,28 +6,28 @@ import test from "ava";
 class Vertex<T> {
   constructor(
     public value: T,
-    public adjacentVertices: { [key: number]: Vertex<T>[] } = {}
+    public edges: { [key: number]: Vertex<T>[] } = {}
   ) {}
 
   public addEdge = (vertex: Vertex<T>, weight: number) => {
     // edges are keyed by weight
-    if (weight in this.adjacentVertices) {
-      this.adjacentVertices[weight].push(vertex);
+    if (weight in this.edges) {
+      this.edges[weight].push(vertex);
     } else {
-      this.adjacentVertices[weight] = [vertex];
+      this.edges[weight] = [vertex];
     }
   };
 
   public getEdgeByValue = (searchTerm: T): Vertex<T> | undefined => {
-    const weights = Object.keys(this.adjacentVertices);
+    const weights = Object.keys(this.edges);
 
     // search all weights
     for (let i = 0; i < weights.length; i++) {
       const weight = parseInt(weights[i], 10); // convert to int
 
       // search all vertexes in that weight class
-      for (let i = 0; i < this.adjacentVertices[weight].length; i++) {
-        const vertex = this.adjacentVertices[weight][i];
+      for (let i = 0; i < this.edges[weight].length; i++) {
+        const vertex = this.edges[weight][i];
 
         if (vertex.value === searchTerm) return vertex;
       }
