@@ -46,6 +46,11 @@ test("vertices", (t) => {
   atlanta.addEdge(boston, 100);
   atlanta.addEdge(chicago, 30);
 
+  // edges by weight
+  t.deepEqual(atlanta.edges[100], [boston]);
+  t.deepEqual(atlanta.edges[30], [chicago]);
+
+  // edge by value
   t.is(atlanta.getEdgeByValue("Boston"), boston);
   t.is(atlanta.getEdgeByValue("Chicago"), chicago);
 });
