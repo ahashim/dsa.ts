@@ -17,6 +17,25 @@ class Vertex<T> {
       this.adjacentVertices[weight] = [vertex];
     }
   };
+
+  public getEdgeByValue = (searchTerm: T): Vertex<T> | undefined => {
+    const weights = Object.keys(this.adjacentVertices);
+
+    // search all weights
+    for (let i = 0; i < weights.length; i++) {
+      const weight = parseInt(weights[i], 10); // convert to int
+
+      // search all vertexes in that weight class
+      for (let i = 0; i < this.adjacentVertices[weight].length; i++) {
+        const vertex = this.adjacentVertices[weight][i];
+
+        if (vertex.value === searchTerm) return vertex;
+      }
+    }
+
+    // vertex is not in adjacentVertices
+    return undefined;
+  };
 }
 
 test("vertices", (t) => {
@@ -27,6 +46,6 @@ test("vertices", (t) => {
   atlanta.addEdge(boston, 100);
   atlanta.addEdge(chicago, 30);
 
-  t.is(atlanta.adjacentVertices[100][0], boston);
-  t.is(atlanta.adjacentVertices[30][0], chicago);
+  t.is(atlanta.getEdgeByValue("Boston"), boston);
+  t.is(atlanta.getEdgeByValue("Chicago"), chicago);
 });
