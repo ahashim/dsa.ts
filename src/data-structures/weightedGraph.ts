@@ -54,3 +54,30 @@ test("vertices", (t) => {
   t.is(atlanta.getEdgeByValue("Boston"), boston);
   t.is(atlanta.getEdgeByValue("Chicago"), chicago);
 });
+
+/*
+ * @dev Helper function to generate a weighted graph of cities => cost to fly.
+ */
+const generateWeightedGraph = (): {
+  start: Vertex<string>;
+  end: Vertex<string>;
+} => {
+  const atlanta = new Vertex("Atlanta");
+  const boston = new Vertex("Boston");
+  const chicago = new Vertex("Chicago");
+  const denver = new Vertex("Denver");
+  const elPaso = new Vertex("El Paso");
+
+  atlanta.addEdge(boston, 100);
+  atlanta.addEdge(denver, 160);
+  boston.addEdge(chicago, 120);
+  boston.addEdge(denver, 180);
+  chicago.addEdge(elPaso, 80);
+  denver.addEdge(chicago, 40);
+  denver.addEdge(elPaso, 140);
+
+  return {
+    start: atlanta,
+    end: elPaso,
+  };
+};
