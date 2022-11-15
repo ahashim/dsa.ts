@@ -249,7 +249,7 @@ test("traverese preOrder", (t) => {
   const bst = generateNumericBinarySearchTree();
 
   const actual = bst.traverse("preOrder");
-  const expected = [1, 5, 2, 4, 3, 9, 6, 8, 10];
+  const expected = [1, 5, 2, 4, 3, 9, 7, 6, 8, 10];
 
   t.deepEqual(actual, expected);
 });
@@ -258,7 +258,7 @@ test("traverese inOrder", (t) => {
   const bst = generateNumericBinarySearchTree();
 
   const actual = bst.traverse("inOrder");
-  const expected = [1, 2, 3, 4, 5, 6, 8, 9, 10];
+  const expected = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   t.deepEqual(actual, expected);
 });
@@ -267,7 +267,7 @@ test("traverese postOrder", (t) => {
   const bst = generateNumericBinarySearchTree();
 
   const actual = bst.traverse("postOrder");
-  const expected = [3, 4, 2, 8, 6, 10, 9, 5, 1];
+  const expected = [3, 4, 2, 6, 8, 7, 10, 9, 5, 1];
 
   t.deepEqual(actual, expected);
 });
@@ -276,7 +276,7 @@ const generateNumericBinarySearchTree = (): BinarySearchTree<number> => {
   const bst: BinarySearchTree<number> = new BinarySearchTree();
 
   // "randomly" insert a range of values from 1 -> 10
-  [1, 5, 9, 2, 4, 10, 6, 3, 8].forEach((i) => bst.insert(i));
+  [1, 5, 9, 2, 7, 4, 10, 6, 3, 8].forEach(bst.insert);
 
   return bst;
 };
