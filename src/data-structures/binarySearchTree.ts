@@ -272,10 +272,14 @@ test("traverese postOrder", (t) => {
   t.deepEqual(actual, expected);
 });
 
+/*
+ * @dev Helper function to generate a binary search tree with "random" values
+*       from 1 - 10.
+ */
 const generateNumericBinarySearchTree = (): BinarySearchTree<number> => {
   const bst: BinarySearchTree<number> = new BinarySearchTree();
 
-  // "randomly" insert a range of values from 1 -> 10
+  // not so "random"
   [1, 5, 9, 2, 7, 4, 10, 6, 3, 8].forEach(bst.insert);
 
   return bst;
