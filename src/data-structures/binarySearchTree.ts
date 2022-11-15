@@ -258,7 +258,7 @@ test("traverese postOrder", (t) => {
 
 /*
  * @dev Helper function to generate a binary search tree with "random" values
-*       from 1 - 10.
+ *      from 1 - 10.
  */
 const generateNumericBinarySearchTree = (): BinarySearchTree<number> => {
   const bst: BinarySearchTree<number> = new BinarySearchTree();
