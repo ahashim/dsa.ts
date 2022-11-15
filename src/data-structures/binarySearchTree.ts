@@ -97,7 +97,7 @@ class BinarySearchTree<T> {
     }
   };
 
-  public traverse = (order: Order = "inOrder"): T[] | undefined | Error => {
+  public traverse = (order: Order = "inOrder"): T[] | Error => {
     if (this.root) {
       switch (order) {
         case "preOrder":
@@ -110,6 +110,8 @@ class BinarySearchTree<T> {
           throw new Error("BinarySearchTree: invalid traversal method");
       }
     }
+
+    return [];
   };
 
   private _delete = (value: T, node?: Node<T>): Node<T> | undefined => {
