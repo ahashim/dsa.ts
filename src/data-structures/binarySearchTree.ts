@@ -1,5 +1,7 @@
 import test from "ava";
 
+type Order = "inOrder" | "preOrder" | "postOrder";
+
 /*
  * @dev Implements a tree node with left & right children.
  */
@@ -95,6 +97,21 @@ class BinarySearchTree<T> {
     }
   };
 
+  public traverse = (order: Order = "inOrder"): T[] | undefined | Error => {
+    if (this.root) {
+      switch (order) {
+        case "preOrder":
+          return this._preOrderTraversal(this.root);
+        case "inOrder":
+          return this._inOrderTraversal(this.root);
+        case "postOrder":
+          return this._postOrderTraversal(this.root);
+        default:
+          throw new Error("BinarySearchTree: invalid traversal method");
+      }
+    }
+  };
+
   private _delete = (value: T, node?: Node<T>): Node<T> | undefined => {
     if (node === undefined) {
       // base case: reached the bottom of the tree
@@ -150,6 +167,63 @@ class BinarySearchTree<T> {
       return currentNode.right;
     }
   };
+
+  private _preOrderTraversal = (
+    node: Node<T>,
+    values: T[] = []
+  ): T[] | undefined => {
+    // base case
+    if (!node) return;
+
+    // add the value of the current node
+    values.push(node.value);
+
+    // recurse on the left child
+    if (node.left) this._preOrderTraversal(node.left, values);
+
+    // recurse on the right child
+    if (node.right) this._preOrderTraversal(node.right, values);
+
+    return values;
+  };
+
+  private _inOrderTraversal = (
+    node: Node<T>,
+    values: T[] = []
+  ): T[] | undefined => {
+    // base case
+    if (!node) return;
+
+    // recurse on the left child
+    if (node.left) this._inOrderTraversal(node.left, values);
+
+    // then add the value of the current node
+    values.push(node.value);
+
+    // recurse on the right child
+    if (node.right) this._inOrderTraversal(node.right, values);
+
+    return values;
+  };
+
+  private _postOrderTraversal = (
+    node: Node<T>,
+    values: T[] = []
+  ): T[] | undefined => {
+    // base case
+    if (!node) return;
+
+    // recurse on the left child
+    if (node.left) this._postOrderTraversal(node.left, values);
+
+    // recurse on the right child
+    if (node.right) this._postOrderTraversal(node.right, values);
+
+    // finally add the value of the current node
+    values.push(node.value);
+
+    return values;
+  };
 }
 
 test("insert", (t) => {
@@ -170,3 +244,39 @@ test("delete", (t) => {
   t.is(bst.contains(420), false);
   t.is(bst.contains(1337), true);
 });
+
+test("traverese preOrder", (t) => {
+  const bst = generateNumericBinarySearchTree();
+
+  const actual = bst.traverse("preOrder");
+  const expected = [1, 5, 2, 4, 3, 9, 6, 8, 10];
+
+  t.deepEqual(actual, expected);
+});
+
+test("traverese inOrder", (t) => {
+  const bst = generateNumericBinarySearchTree();
+
+  const actual = bst.traverse("inOrder");
+  const expected = [1, 2, 3, 4, 5, 6, 8, 9, 10];
+
+  t.deepEqual(actual, expected);
+});
+
+test("traverese postOrder", (t) => {
+  const bst = generateNumericBinarySearchTree();
+
+  const actual = bst.traverse("postOrder");
+  const expected = [3, 4, 2, 8, 6, 10, 9, 5, 1];
+
+  t.deepEqual(actual, expected);
+});
+
+const generateNumericBinarySearchTree = (): BinarySearchTree<number> => {
+  const bst: BinarySearchTree<number> = new BinarySearchTree();
+
+  // "randomly" insert a range of values from 1 -> 10
+  [1, 5, 9, 2, 4, 10, 6, 3, 8].forEach((i) => bst.insert(i));
+
+  return bst;
+};
