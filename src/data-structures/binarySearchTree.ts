@@ -169,55 +169,55 @@ class BinarySearchTree<T> {
   };
 
   private _preOrderTraversal = (
-    node: Node<T>,
+    node: Node<T> | undefined,
     values: T[] = []
   ): T[] | undefined => {
     // base case
     if (!node) return;
 
-    // add the value of the current node
+    // first add the value of the current node
     values.push(node.value);
 
     // recurse on the left child
-    if (node.left) this._preOrderTraversal(node.left, values);
+    this._preOrderTraversal(node.left, values);
 
     // recurse on the right child
-    if (node.right) this._preOrderTraversal(node.right, values);
+    this._preOrderTraversal(node.right, values);
 
     return values;
   };
 
   private _inOrderTraversal = (
-    node: Node<T>,
+    node: Node<T> | undefined,
     values: T[] = []
   ): T[] | undefined => {
     // base case
     if (!node) return;
 
     // recurse on the left child
-    if (node.left) this._inOrderTraversal(node.left, values);
+    this._inOrderTraversal(node.left, values);
 
     // then add the value of the current node
     values.push(node.value);
 
     // recurse on the right child
-    if (node.right) this._inOrderTraversal(node.right, values);
+    this._inOrderTraversal(node.right, values);
 
     return values;
   };
 
   private _postOrderTraversal = (
-    node: Node<T>,
+    node: Node<T> | undefined,
     values: T[] = []
   ): T[] | undefined => {
     // base case
     if (!node) return;
 
     // recurse on the left child
-    if (node.left) this._postOrderTraversal(node.left, values);
+    this._postOrderTraversal(node.left, values);
 
     // recurse on the right child
-    if (node.right) this._postOrderTraversal(node.right, values);
+    this._postOrderTraversal(node.right, values);
 
     // finally add the value of the current node
     values.push(node.value);
