@@ -48,6 +48,13 @@ class DoublyLinkedList<T> {
     }
   }
 
+  public deleteFromHead = (): void => {
+    if (this.head) {
+      this.head = this.head.next;
+      if (this.head?.prev) this.head.prev = undefined;
+    }
+  };
+
   public insertAtHead = (value: T): void => {
     const node = new Node(value);
 
@@ -85,6 +92,14 @@ test("head", (t) => {
   const list = new DoublyLinkedList(nodesFromSentence("hello there!"));
 
   t.is(list.head?.value, "hello");
+});
+
+test("deleteFromHead", (t) => {
+  const list = new DoublyLinkedList(nodesFromSentence("this is the wei"));
+  list.deleteFromHead();
+
+  t.is(list.head?.value, "is");
+  t.is(list.head?.prev?.value, undefined);
 });
 
 test("insertAtHead", (t) => {
