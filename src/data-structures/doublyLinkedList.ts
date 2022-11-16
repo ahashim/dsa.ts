@@ -11,6 +11,8 @@ test("nodes", (t) => {
   const { head, tail } = nodesFromSentence("hello world!");
 
   t.is(head.next?.value, "world!");
+  t.is(head.prev?.value, undefined);
+  t.is(tail.next?.value, undefined);
   t.is(tail.prev?.value, "hello");
 });
 
@@ -19,7 +21,10 @@ test("nodes", (t) => {
  */
 const nodesFromSentence = (
   sentence: string
-): { head: Node<string>; tail: Node<string> } => {
+): {
+  head: Node<string>;
+  tail: Node<string>;
+} => {
   // create nodes from words
   const nodes = sentence.split(" ").map((word) => new Node(word));
 
@@ -38,4 +43,4 @@ const nodesFromSentence = (
 /*
  * @dev Out of bounds error for insertion & deletion.
  */
-// const outOfBoundsError = new Error("LinkedList: index out of bounds");
+// const outOfBoundsError = new Error("DoublyLinkedList: index out of bounds");
