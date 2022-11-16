@@ -8,23 +8,96 @@ class Node<T> {
 }
 
 test("nodes", (t) => {
-  const { head, tail } = nodesFromSentence("hello world!");
+  const head = nodesFromSentence("hello world!");
 
+  t.is(head.value, "hello");
   t.is(head.next?.value, "world!");
   t.is(head.prev?.value, undefined);
-  t.is(tail.next?.value, undefined);
-  t.is(tail.prev?.value, "hello");
+  t.is(head.next?.next?.value, undefined); // tail next
+});
+
+/*
+ * @dev Implements a doubly linked list.
+ */
+class DoublyLinkedList<T> {
+  public head?: Node<T>;
+  public tail?: Node<T>;
+  public size: number;
+
+  constructor(initialNode?: Node<T>) {
+    this.size = 0;
+
+    if (initialNode) {
+      this.head = initialNode;
+      this.size = 1;
+
+      // if there are connected nodes
+      if (initialNode.next) {
+        let node: Node<T> | undefined = initialNode;
+        // follow the links until the end
+        while (node.next) {
+          node = node.next;
+          this.size++;
+        }
+
+        this.tail = node;
+      } else {
+        // head and tail are the same
+        this.tail = initialNode;
+      }
+    }
+  }
+
+  public insertAtHead = (value: T): void => {
+    const node = new Node(value);
+
+    if (!this.head) {
+      this.head = node;
+    } else {
+      // append & update head
+      this.head.prev = node;
+      node.next = this.head;
+      this.head = node;
+    }
+
+    this.size++;
+  };
+}
+
+test("head", (t) => {
+  const list = new DoublyLinkedList(nodesFromSentence("hello there!"));
+
+  t.is(list.head?.value, "hello");
+});
+
+test("insertAtHead", (t) => {
+  const list = new DoublyLinkedList(
+    nodesFromSentence("or do not, there is no try")
+  );
+  list.insertAtHead("do");
+
+  t.is(list.head?.value, "do");
+  t.is(list.head?.next?.value, "or");
+});
+
+test("size", (t) => {
+  const list = new DoublyLinkedList(
+    nodesFromSentence("aren't you a little short for a stormtrooper?")
+  );
+
+  t.is(list.size, 8);
+});
+
+test("tail", (t) => {
+  const list = new DoublyLinkedList(nodesFromSentence("another happy landing"));
+
+  t.is(list.tail?.value, "landing");
 });
 
 /*
  * @dev Helper function to generate a linked list of nodes from a sentence.
  */
-const nodesFromSentence = (
-  sentence: string
-): {
-  head: Node<string>;
-  tail: Node<string>;
-} => {
+const nodesFromSentence = (sentence: string): Node<string> => {
   // create nodes from words
   const nodes = sentence.split(" ").map((word) => new Node(word));
 
@@ -34,10 +107,7 @@ const nodesFromSentence = (
     nodes[i].prev = nodes[i - 1];
   }
 
-  return {
-    head: nodes[0],
-    tail: nodes[nodes.length - 1],
-  };
+  return nodes[0];
 };
 
 /*
