@@ -97,7 +97,7 @@ test("insertAtHead", (t) => {
   t.is(list.head?.next?.value, "or");
 });
 
-test.only("insertAtTail", (t) => {
+test("insertAtTail", (t) => {
   const list = new DoublyLinkedList(
     nodesFromSentence("I find your lack of faith...")
   );
