@@ -51,13 +51,30 @@ class DoublyLinkedList<T> {
   public insertAtHead = (value: T): void => {
     const node = new Node(value);
 
-    if (!this.head) {
+    if (!this.head || this.size == 0) {
       this.head = node;
+      this.tail = node;
     } else {
-      // append & update head
+      // prepend to & update head
       this.head.prev = node;
       node.next = this.head;
       this.head = node;
+    }
+
+    this.size++;
+  };
+
+  public insertAtTail = (value: T): void => {
+    const node = new Node(value);
+
+    if (!this.tail || this.size == 0) {
+      this.head = node;
+      this.tail = node;
+    } else {
+      // append to & update tail
+      this.tail.next = node;
+      node.prev = this.tail;
+      this.tail = node;
     }
 
     this.size++;
@@ -80,6 +97,16 @@ test("insertAtHead", (t) => {
   t.is(list.head?.next?.value, "or");
 });
 
+test.only("insertAtTail", (t) => {
+  const list = new DoublyLinkedList(
+    nodesFromSentence("I find your lack of faith...")
+  );
+  list.insertAtTail("...mildly amusing");
+
+  t.is(list.tail?.value, "...mildly amusing");
+  t.is(list.tail?.prev?.value, "faith...");
+});
+
 test("size", (t) => {
   const list = new DoublyLinkedList(
     nodesFromSentence("aren't you a little short for a stormtrooper?")
@@ -99,7 +126,7 @@ test("tail", (t) => {
  */
 const nodesFromSentence = (sentence: string): Node<string> => {
   // create nodes from words
-  const nodes = sentence.split(" ").map((word) => new Node(word));
+  const nodes = sentence.split(/\s+/).map((word) => new Node(word));
 
   // link them to each other
   for (let i = 0; i < nodes.length; i++) {
