@@ -53,6 +53,9 @@ class DoublyLinkedList<T> {
       // move 2nd item into head
       this.head = this.head.next;
       if (this.head?.prev) this.head.prev = undefined;
+
+      // update size
+      this.size--;
     }
   };
 
@@ -61,6 +64,9 @@ class DoublyLinkedList<T> {
       // move 2nd to last item to the tail
       this.tail = this.tail.prev;
       if (this.tail?.next) this.tail.next = undefined;
+
+      // update size
+      this.size--;
     }
   };
 
@@ -109,6 +115,7 @@ test("deleteFromHead", (t) => {
 
   t.is(list.head?.value, "is");
   t.is(list.head?.prev, undefined);
+  t.is(list.size, 3);
 });
 
 test("deleteFromTail", (t) => {
@@ -117,6 +124,7 @@ test("deleteFromTail", (t) => {
 
   t.is(list.tail?.value, "no");
   t.is(list.tail?.next, undefined);
+  t.is(list.size, 2);
 });
 
 test("insertAtHead", (t) => {
@@ -127,6 +135,7 @@ test("insertAtHead", (t) => {
 
   t.is(list.head?.value, "do");
   t.is(list.head?.next?.value, "or");
+  t.is(list.size, 8);
 });
 
 test("insertAtTail", (t) => {
@@ -137,6 +146,7 @@ test("insertAtTail", (t) => {
 
   t.is(list.tail?.value, "...mildly amusing");
   t.is(list.tail?.prev?.value, "faith...");
+  t.is(list.size, 7);
 });
 
 test("size", (t) => {
