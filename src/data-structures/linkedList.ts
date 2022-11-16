@@ -64,8 +64,6 @@ class LinkedList<T> {
       currentNode = currentNode?.next;
       currentIndex++;
     }
-
-    return;
   };
 
   public insertAt = (index: number, value: T): void => {
