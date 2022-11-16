@@ -8,7 +8,7 @@ class Node<T> {
 }
 
 test("nodes", (t) => {
-  const [n1] = nodesFromSentence("hello world!");
+  const n1 = nodesFromSentence("hello world!");
   const actual = n1.next?.value;
   const expected = "world!";
 
@@ -140,7 +140,7 @@ class LinkedList<T> {
 }
 
 test("deleteAt", (t) => {
-  const list = new LinkedList(nodesFromSentence("do or do not")[0]);
+  const list = new LinkedList(nodesFromSentence("do or do not"));
   const index = 2;
   list.deleteAt(index);
 
@@ -151,7 +151,7 @@ test("deleteAt", (t) => {
 });
 
 test("head", (t) => {
-  const list = new LinkedList(nodesFromSentence("hello there!")[0]);
+  const list = new LinkedList(nodesFromSentence("hello there!"));
 
   const actual = list.head;
   const expected = "hello";
@@ -160,7 +160,7 @@ test("head", (t) => {
 });
 
 test("indexOf", (t) => {
-  const list = new LinkedList(nodesFromSentence("i have altered the deal")[0]);
+  const list = new LinkedList(nodesFromSentence("i have altered the deal"));
 
   const actual = list.indexOf("deal");
   const expected = 4;
@@ -169,7 +169,7 @@ test("indexOf", (t) => {
 });
 
 test("insertAt", (t) => {
-  const list = new LinkedList(nodesFromSentence("i sand")[0]);
+  const list = new LinkedList(nodesFromSentence("i sand"));
   const index = 1;
   list.insertAt(index, "hate");
 
@@ -180,7 +180,7 @@ test("insertAt", (t) => {
 });
 
 test("read", (t) => {
-  const list = new LinkedList(nodesFromSentence("i am the senate")[0]);
+  const list = new LinkedList(nodesFromSentence("i am the senate"));
 
   const actual = list.read(3);
   const expected = "senate";
@@ -190,7 +190,7 @@ test("read", (t) => {
 
 test("reverse", (t) => {
   const list = new LinkedList(
-    nodesFromSentence("we will watch your career with great interest")[0]
+    nodesFromSentence("we will watch your career with great interest")
   );
   list.reverse();
 
@@ -203,14 +203,14 @@ test("reverse", (t) => {
 /*
  * @dev Helper function to generate a linked list of nodes from a sentence.
  */
-const nodesFromSentence = (sentence: string): Node<string>[] => {
+const nodesFromSentence = (sentence: string): Node<string> => {
   // create nodes from words
   const nodes = sentence.split(" ").map((word) => new Node(word));
 
   // link them to each other
   for (let i = 0; i < nodes.length; i++) nodes[i].next = nodes[i + 1];
 
-  return nodes;
+  return nodes[0];
 };
 
 /*
