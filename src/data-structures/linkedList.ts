@@ -205,7 +205,7 @@ test("reverse", (t) => {
  */
 const nodesFromSentence = (sentence: string): Node<string> => {
   // create nodes from words
-  const nodes = sentence.split(" ").map((word) => new Node(word));
+  const nodes = sentence.split(/\s+/).map((word) => new Node(word));
 
   // link them to each other
   for (let i = 0; i < nodes.length; i++) nodes[i].next = nodes[i + 1];
