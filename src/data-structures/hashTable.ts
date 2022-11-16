@@ -78,43 +78,72 @@ test("findDuplicate", (t) => {
 const findMissingLetters = (str: string): string => {
   // types
   type HashTable = {
-    a?: boolean;
-    b?: boolean;
-    c?: boolean;
-    d?: boolean;
-    e?: boolean;
-    f?: boolean;
-    g?: boolean;
-    h?: boolean;
-    i?: boolean;
-    j?: boolean;
-    k?: boolean;
-    l?: boolean;
-    m?: boolean;
-    n?: boolean;
-    o?: boolean;
-    p?: boolean;
-    q?: boolean;
-    r?: boolean;
-    s?: boolean;
-    t?: boolean;
-    u?: boolean;
-    v?: boolean;
-    w?: boolean;
-    x?: boolean;
-    y?: boolean;
-    z?: boolean;
+    a: boolean;
+    b: boolean;
+    c: boolean;
+    d: boolean;
+    e: boolean;
+    f: boolean;
+    g: boolean;
+    h: boolean;
+    i: boolean;
+    j: boolean;
+    k: boolean;
+    l: boolean;
+    m: boolean;
+    n: boolean;
+    o: boolean;
+    p: boolean;
+    q: boolean;
+    r: boolean;
+    s: boolean;
+    t: boolean;
+    u: boolean;
+    v: boolean;
+    w: boolean;
+    x: boolean;
+    y: boolean;
+    z: boolean;
   };
 
   // vars
   const result: string[] = [];
-  const seenLetters: HashTable = {};
+  const seenLetters: HashTable = {
+    a: false,
+    b: false,
+    c: false,
+    d: false,
+    e: false,
+    f: false,
+    g: false,
+    h: false,
+    i: false,
+    j: false,
+    k: false,
+    l: false,
+    m: false,
+    n: false,
+    o: false,
+    p: false,
+    q: false,
+    r: false,
+    s: false,
+    t: false,
+    u: false,
+    v: false,
+    w: false,
+    x: false,
+    y: false,
+    z: false,
+  };
 
   // mark seen characters
   for (let i = 0; i < str.length; i++) {
+    // skip whitespace
     if (!str[i].match(/\s/)) {
-      // skip whitespace
-      seenLetters[str[i].toLowerCase() as keyof HashTable] = true;
+      const letter = str[i].toLowerCase() as keyof HashTable;
+
+      seenLetters[letter] = true;
     }
   }
 
@@ -129,7 +158,7 @@ const findMissingLetters = (str: string): string => {
   return result.join("");
 };
 
-test("findMissingLetters", (t) => {
+test.only("findMissingLetters", (t) => {
   const actual = findMissingLetters(
     "the quick brown box jumps over the lazy hog"
   );
