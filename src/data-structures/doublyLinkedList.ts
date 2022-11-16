@@ -50,8 +50,17 @@ class DoublyLinkedList<T> {
 
   public deleteFromHead = (): void => {
     if (this.head) {
+      // move 2nd item into head
       this.head = this.head.next;
       if (this.head?.prev) this.head.prev = undefined;
+    }
+  };
+
+  public deleteFromTail = (): void => {
+    if (this.tail) {
+      // move 2nd to last item to the tail
+      this.tail = this.tail.prev;
+      if (this.tail?.next) this.tail.next = undefined;
     }
   };
 
@@ -99,7 +108,15 @@ test("deleteFromHead", (t) => {
   list.deleteFromHead();
 
   t.is(list.head?.value, "is");
-  t.is(list.head?.prev?.value, undefined);
+  t.is(list.head?.prev, undefined);
+});
+
+test("deleteFromTail", (t) => {
+  const list = new DoublyLinkedList(nodesFromSentence("that's no moon"));
+  list.deleteFromTail();
+
+  t.is(list.tail?.value, "no");
+  t.is(list.tail?.next, undefined);
 });
 
 test("insertAtHead", (t) => {
