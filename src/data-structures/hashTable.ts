@@ -158,7 +158,7 @@ const findMissingLetters = (str: string): string => {
   return result.join("");
 };
 
-test.only("findMissingLetters", (t) => {
+test("findMissingLetters", (t) => {
   const actual = findMissingLetters(
     "the quick brown box jumps over the lazy hog"
   );
