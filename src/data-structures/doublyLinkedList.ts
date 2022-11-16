@@ -7,7 +7,7 @@ class Node<T> {
   constructor(public value: T, public next?: Node<T>, public prev?: Node<T>) {}
 }
 
-test.only("nodes", (t) => {
+test("nodes", (t) => {
   const { head, tail } = nodesFromSentence("hello world!");
 
   t.is(head.next?.value, "world!");
