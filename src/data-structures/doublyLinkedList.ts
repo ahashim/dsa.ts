@@ -32,12 +32,10 @@ class DoublyLinkedList<T> {
       this.head = node;
       this.size = 1;
 
-      if (node.next) {
-        // follow linked nodes until the end
-        while (node.next) {
-          node = node.next;
-          this.size++;
-        }
+      // follow linked nodes until the end
+      while (node.next) {
+        node = node.next;
+        this.size++;
       }
 
       this.tail = node;
