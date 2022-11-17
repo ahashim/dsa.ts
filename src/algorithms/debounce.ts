@@ -1,21 +1,23 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import test from "ava";
+
+type Callback = (...args: any[]) => any;
 
 /*
  * @dev Implements a debouncer.
  */
-export const debounce = <F extends (...args: Parameters<F>) => ReturnType<F>>(
-  func: F,
-  waitFor: number
-) => {
-  let timeout: number;
+const debounce = (fn: Callback, wait = 300): ReturnType<typeof fn> => {
+  let timerID: ReturnType<typeof setTimeout>;
 
-  return (...args: Parameters<F>) => {
-    clearTimeout(timeout);
-    timeout = setTimeout(() => func(...args), waitFor);
+  return function (this: any, ...args: any[]) {
+    clearTimeout(timerID);
+
+    // apply timerID context via closure
+    timerID = setTimeout(() => fn.apply(this, args), wait);
   };
 };
 
-test("debouncer", (t) => {
+test("debounce", (t) => {
   let callCount = 0;
 
   const debounced = debounce((value: string) => {
