@@ -74,6 +74,24 @@ class DoublyLinkedList<T> {
     }
   };
 
+  public read = (index: number): T | undefined => {
+    if (index > this.size) throw outOfBoundsError;
+
+    if (this.head) {
+      let currentIndex = 0;
+      let currentNode: Node<T> | undefined = this.head;
+
+      while (currentIndex < index) {
+        currentNode = currentNode.next;
+        currentIndex++;
+
+        if (!currentNode) return;
+      }
+
+      return currentNode.value;
+    }
+  };
+
   public insertAtHead = (value: T): void => {
     const node = new Node(value);
 
@@ -145,6 +163,23 @@ test("deleteFromTail", (t) => {
   t.is(singleItemList.size, 0);
 });
 
+test("read", (t) => {
+  const list = new DoublyLinkedList(nodesFromSentence("i will make it legal"));
+
+  t.is(list.read(4), "legal");
+  t.is(list.size, 5);
+
+  list.deleteFromTail();
+  list.insertAtTail("funny");
+
+  t.is(list.read(4), "funny");
+  t.is(list.size, 5);
+
+  const error = t.throws(() => list.read(Infinity), { instanceOf: Error });
+
+  t.is(error?.message, "DoublyLinkedList: index out of bounds");
+});
+
 test("insertAtHead", (t) => {
   const list = new DoublyLinkedList(
     nodesFromSentence("or do not, there is no try")
@@ -212,6 +247,8 @@ const nodesFromSentence = (sentence: string): Node<string> => {
 };
 
 /*
- * @dev Out of bounds error for insertion & deletion.
+ * @dev Out of bounds error for read, insertion, and deletion.
  */
-// const outOfBoundsError = new Error("DoublyLinkedList: index out of bounds");
+const outOfBoundsError = new RangeError(
+  `${new DoublyLinkedList().constructor.name}: index out of bounds`
+);
