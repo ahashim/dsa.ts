@@ -28,23 +28,19 @@ class DoublyLinkedList<T> {
     this.size = 0;
 
     if (initialNode) {
-      this.head = initialNode;
+      let node: Node<T> | undefined = initialNode;
+      this.head = node;
       this.size = 1;
 
-      // if there are connected nodes
-      if (initialNode.next) {
-        let node: Node<T> | undefined = initialNode;
-        // follow the links until the end
+      if (node.next) {
+        // follow linked nodes until the end
         while (node.next) {
           node = node.next;
           this.size++;
         }
-
-        this.tail = node;
-      } else {
-        // head and tail are the same
-        this.tail = initialNode;
       }
+
+      this.tail = node;
     }
   }
 
