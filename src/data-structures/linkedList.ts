@@ -185,12 +185,7 @@ test("read", (t) => {
 
   t.is(actual, expected);
 
-  const error = t.throws(
-    () => {
-      list.read(100);
-    },
-    { instanceOf: Error }
-  );
+  const error = t.throws(() => list.read(100), { instanceOf: Error });
 
   t.is(error?.message, "LinkedList: index out of bounds");
 });
