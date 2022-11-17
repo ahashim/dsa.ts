@@ -38,7 +38,7 @@ const throttle = (fn: Callback, wait = 300): ReturnType<typeof fn> => {
   };
 };
 
-test.only("throttle", (t) => {
+test("throttle", (t) => {
   let callCount = 0;
   const throttled = throttle(() => callCount++, 32);
 
