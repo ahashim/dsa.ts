@@ -9,15 +9,15 @@ type Callback = (...args: any[]) => any;
 const throttle = (fn: Callback, wait = 300): ReturnType<typeof fn> => {
   let engaged = false;
 
-  return function (...args: any) {
+  return function (this: any, ...args: any) {
     // exit early if throttle is engaged
     if (engaged) return;
 
     // engage throttle
     engaged = true;
 
-    // call the funtion
-    fn.call([...args]);
+    // call the funtion with local context
+    fn.apply(this, args);
 
     // disengage after wait time
     setTimeout(() => (engaged = false), wait);
