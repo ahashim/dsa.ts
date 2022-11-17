@@ -74,21 +74,17 @@ class DoublyLinkedList<T> {
     }
   };
 
-  public read = (index: number): T | undefined => {
-    if (index > this.size) throw outOfBoundsError;
-
+  public indexOf = (value: T): number | undefined => {
     if (this.head) {
       let currentIndex = 0;
       let currentNode: Node<T> | undefined = this.head;
 
-      while (currentIndex < index) {
+      while (currentNode) {
+        if (currentNode.value === value) return currentIndex;
+
         currentNode = currentNode.next;
         currentIndex++;
-
-        if (!currentNode) return;
       }
-
-      return currentNode.value;
     }
   };
 
@@ -122,6 +118,24 @@ class DoublyLinkedList<T> {
     }
 
     this.size++;
+  };
+
+  public read = (index: number): T | undefined | RangeError => {
+    if (index > this.size) throw outOfBoundsError;
+
+    if (this.head) {
+      let currentIndex = 0;
+      let currentNode: Node<T> | undefined = this.head;
+
+      while (currentIndex < index) {
+        currentNode = currentNode.next;
+        currentIndex++;
+
+        if (!currentNode) return;
+      }
+
+      return currentNode.value;
+    }
   };
 }
 
@@ -163,21 +177,11 @@ test("deleteFromTail", (t) => {
   t.is(singleItemList.size, 0);
 });
 
-test("read", (t) => {
-  const list = new DoublyLinkedList(nodesFromSentence("i will make it legal"));
+test("indexOf", (t) => {
+  const list = new DoublyLinkedList(nodesFromSentence("no, i am your father"));
 
-  t.is(list.read(4), "legal");
-  t.is(list.size, 5);
-
-  list.deleteFromTail();
-  list.insertAtTail("funny");
-
-  t.is(list.read(4), "funny");
-  t.is(list.size, 5);
-
-  const error = t.throws(() => list.read(Infinity), { instanceOf: Error });
-
-  t.is(error?.message, "DoublyLinkedList: index out of bounds");
+  t.is(list.indexOf("father"), 4);
+  t.is(list.indexOf("mother"), undefined);
 });
 
 test("insertAtHead", (t) => {
@@ -214,6 +218,23 @@ test("insertAtTail", (t) => {
   t.is(singleItemList.head?.value, 1337);
   t.is(singleItemList.tail?.value, 1337);
   t.is(singleItemList.size, 1);
+});
+
+test("read", (t) => {
+  const list = new DoublyLinkedList(nodesFromSentence("i will make it legal"));
+
+  t.is(list.read(4), "legal");
+  t.is(list.size, 5);
+
+  list.deleteFromTail();
+  list.insertAtTail("funny");
+
+  t.is(list.read(4), "funny");
+  t.is(list.size, 5);
+
+  const error = t.throws(() => list.read(Infinity), { instanceOf: Error });
+
+  t.is(error?.message, "DoublyLinkedList: index out of bounds");
 });
 
 test("size", (t) => {
