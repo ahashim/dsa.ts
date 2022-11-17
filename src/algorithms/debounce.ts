@@ -7,7 +7,7 @@ type Callback = (...args: any[]) => any;
  * @dev Implements a debouncer.
  */
 const debounce = (fn: Callback, wait: number): ReturnType<typeof fn> => {
-  let timerID: ReturnType<typeof setTimeout>;
+  let timerID: number;
 
   return function (this: any, ...args: any[]) {
     clearTimeout(timerID);
