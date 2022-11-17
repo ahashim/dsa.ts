@@ -52,7 +52,12 @@ class DoublyLinkedList<T> {
     if (this.head) {
       // move 2nd item into head
       this.head = this.head.next;
+
+      // detach head
       if (this.head?.prev) this.head.prev = undefined;
+
+      // remove tail if list is empty
+      if (!this.head?.next) this.tail = undefined;
 
       // update size
       this.size--;
@@ -63,7 +68,12 @@ class DoublyLinkedList<T> {
     if (this.tail) {
       // move 2nd to last item to the tail
       this.tail = this.tail.prev;
+
+      // detach tail
       if (this.tail?.next) this.tail.next = undefined;
+
+      // remove head if list is empty
+      if (!this.tail?.prev) this.head = undefined;
 
       // update size
       this.size--;
@@ -116,6 +126,13 @@ test("deleteFromHead", (t) => {
   t.is(list.head?.value, "is");
   t.is(list.head?.prev, undefined);
   t.is(list.size, 3);
+
+  const singleItemList = new DoublyLinkedList(new Node(1337));
+  singleItemList.deleteFromTail();
+
+  t.is(singleItemList.head, undefined);
+  t.is(singleItemList.tail, undefined);
+  t.is(singleItemList.size, 0);
 });
 
 test("deleteFromTail", (t) => {
@@ -125,6 +142,13 @@ test("deleteFromTail", (t) => {
   t.is(list.tail?.value, "no");
   t.is(list.tail?.next, undefined);
   t.is(list.size, 2);
+
+  const singleItemList = new DoublyLinkedList(new Node(1337));
+  singleItemList.deleteFromHead();
+
+  t.is(singleItemList.head, undefined);
+  t.is(singleItemList.tail, undefined);
+  t.is(singleItemList.size, 0);
 });
 
 test("insertAtHead", (t) => {
@@ -136,6 +160,13 @@ test("insertAtHead", (t) => {
   t.is(list.head?.value, "do");
   t.is(list.head?.next?.value, "or");
   t.is(list.size, 8);
+
+  const singleItemList = new DoublyLinkedList();
+  singleItemList.insertAtHead(1337);
+
+  t.is(singleItemList.head?.value, 1337);
+  t.is(singleItemList.tail?.value, 1337);
+  t.is(singleItemList.size, 1);
 });
 
 test("insertAtTail", (t) => {
@@ -147,6 +178,13 @@ test("insertAtTail", (t) => {
   t.is(list.tail?.value, "...mildly amusing");
   t.is(list.tail?.prev?.value, "faith...");
   t.is(list.size, 7);
+
+  const singleItemList = new DoublyLinkedList();
+  singleItemList.insertAtTail(1337);
+
+  t.is(singleItemList.head?.value, 1337);
+  t.is(singleItemList.tail?.value, 1337);
+  t.is(singleItemList.size, 1);
 });
 
 test("size", (t) => {
