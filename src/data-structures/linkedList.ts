@@ -185,7 +185,7 @@ test("read", (t) => {
 
   t.is(actual, expected);
 
-  const error = t.throws(() => list.read(100), { instanceOf: Error });
+  const error = t.throws(() => list.read(100), { instanceOf: RangeError });
 
   t.is(error?.message, "LinkedList: index out of bounds");
 });
@@ -218,4 +218,4 @@ const nodesFromSentence = (sentence: string): Node<string> => {
 /*
  * @dev Out of bounds error for insertion & deletion.
  */
-const outOfBoundsError = new Error("LinkedList: index out of bounds");
+const outOfBoundsError = new RangeError("LinkedList: index out of bounds");
