@@ -6,7 +6,7 @@ type Callback = (...args: any[]) => any;
 /*
  * @dev Implements a debouncer.
  */
-const debounce = (fn: Callback, wait = 300): ReturnType<typeof fn> => {
+const debounce = (fn: Callback, wait: number): ReturnType<typeof fn> => {
   let timerID: ReturnType<typeof setTimeout>;
 
   return function (this: any, ...args: any[]) {
