@@ -109,12 +109,10 @@ class LinkedList<T> {
         currentNode = currentNode.next;
         currentIndex++;
 
-        if (!currentNode) return;
+        if (!currentNode) throw outOfBoundsError;
       }
 
       return currentNode.value;
-    } else {
-      throw outOfBoundsError;
     }
   };
 
@@ -186,6 +184,15 @@ test("read", (t) => {
   const expected = "senate";
 
   t.is(actual, expected);
+
+  const error = t.throws(
+    () => {
+      list.read(100);
+    },
+    { instanceOf: Error }
+  );
+
+  t.is(error?.message, "LinkedList: index out of bounds");
 });
 
 test("reverse", (t) => {
