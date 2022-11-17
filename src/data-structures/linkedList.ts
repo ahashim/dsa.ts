@@ -218,4 +218,6 @@ const nodesFromSentence = (sentence: string): Node<string> => {
 /*
  * @dev Out of bounds error for insertion & deletion.
  */
-const outOfBoundsError = new RangeError("LinkedList: index out of bounds");
+const outOfBoundsError = new RangeError(
+  `${new LinkedList().constructor.name}: index out of bounds`
+);
