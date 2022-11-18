@@ -137,6 +137,44 @@ class DoublyLinkedList<T> {
       return currentNode.value;
     }
   };
+
+  public reverse = (): void => {
+    if (this.head) {
+      let currentNode: Node<T> | undefined = this.head,
+        temp: Node<T> | undefined;
+
+      while (currentNode) {
+        // assign first node to tail
+        if (!currentNode.prev) this.tail = currentNode;
+
+        // swap pointers with a temporary variable
+        temp = currentNode.prev;
+
+        currentNode.prev = currentNode.next;
+        currentNode.next = temp;
+
+        currentNode = currentNode.prev;
+      }
+
+      // last node is now head
+      if (temp) this.head = temp.prev;
+    }
+  };
+
+  public traverse = (): T[] => {
+    const items: T[] = [];
+
+    if (this.head) {
+      let currentNode: Node<T> | undefined = this.head;
+
+      while (currentNode) {
+        items.push(currentNode.value);
+        currentNode = currentNode.next;
+      }
+    }
+
+    return items;
+  };
 }
 
 test("head", (t) => {
@@ -235,6 +273,17 @@ test("read", (t) => {
   const error = t.throws(() => list.read(Infinity), { instanceOf: Error });
 
   t.is(error?.message, "DoublyLinkedList: index out of bounds");
+});
+
+test("reverse", (t) => {
+  const list = new DoublyLinkedList(
+    nodesFromSentence("fear is the path to the dark side")
+  );
+  list.reverse();
+
+  t.is(list.traverse().join(" "), "side dark the to path the is fear");
+  t.is(list.head?.value, "side");
+  t.is(list.tail?.value, "fear");
 });
 
 test("size", (t) => {
