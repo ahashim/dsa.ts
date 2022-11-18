@@ -149,10 +149,10 @@ class DoublyLinkedList<T> {
 
         // swap pointers with a temporary variable
         temp = currentNode.prev;
-
         currentNode.prev = currentNode.next;
         currentNode.next = temp;
 
+        // move forward
         currentNode = currentNode.prev;
       }
 
