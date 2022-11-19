@@ -325,7 +325,7 @@ test("insertAtTail", (t) => {
   t.is(singleItemList.size, 1);
 });
 
-test("read", (t) => {
+test("readAt", (t) => {
   const list = new DoublyLinkedList(nodesFromSentence("i will make it legal"));
 
   t.is(list.readAt(4), "legal");

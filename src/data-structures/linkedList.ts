@@ -192,7 +192,7 @@ test("insertAt", (t) => {
   t.is(actual, expected);
 });
 
-test("read", (t) => {
+test("readAt", (t) => {
   const list = new LinkedList(nodesFromSentence("i am the senate"));
 
   const actual = list.readAt(3);
