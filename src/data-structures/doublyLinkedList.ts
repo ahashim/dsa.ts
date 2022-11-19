@@ -62,6 +62,8 @@ class DoublyLinkedList<T> {
     }
   };
 
+  public insert = (index: number, value: T): void => this._insert(index, value);
+
   public insertAtHead = (value: T): void => {
     const node = new Node(value);
 
@@ -192,6 +194,34 @@ class DoublyLinkedList<T> {
       this.size--;
     }
   };
+
+  private _insert = (index: number, value: T): void => {
+    if (this.size > 0 && this.head && this.tail) {
+      if (index > this.size - 1) throw outOfBoundsError;
+
+      let currentNode: Node<T> | undefined = this.head;
+      let currentIndex = 0;
+      const newNode = new Node(value);
+
+      // traverse to node before desired index
+      while (currentIndex < index - 1) {
+        currentNode = currentNode?.next;
+        currentIndex++;
+      }
+
+      if (currentNode) {
+        // insert the new node
+        newNode.next = currentNode.next;
+        newNode.prev = currentNode;
+        currentNode.next = newNode;
+        currentNode = newNode.next;
+        if (currentNode) currentNode.prev = newNode;
+      }
+
+      // update size
+      this.size++;
+    }
+  };
 }
 
 test("head", (t) => {
@@ -251,6 +281,22 @@ test("indexOf", (t) => {
 
   t.is(list.indexOf("father"), 4);
   t.is(list.indexOf("mother"), undefined);
+});
+
+test("insert", (t) => {
+  const list = new DoublyLinkedList(
+    nodesFromSentence("did you ever hear the tragedy of darth the wise")
+  );
+  list.insert(8, "plagueis");
+
+  t.is(list.readAt(8), "plagueis");
+  t.is(list.size, 11);
+
+  const error = t.throws(() => list.insert(Infinity, "jarjarbinks"), {
+    instanceOf: RangeError,
+  });
+
+  t.is(error?.message, "DoublyLinkedList: index out of bounds");
 });
 
 test("insertAtHead", (t) => {
