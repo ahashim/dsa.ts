@@ -135,6 +135,21 @@ class LinkedList<T> {
 
     if (previousNode) this.head = previousNode;
   };
+
+  public traverse = (): T[] => {
+    const items: T[] = [];
+
+    if (this.head) {
+      let currentNode: Node<T> | undefined = this.head;
+
+      while (currentNode) {
+        items.push(currentNode.value);
+        currentNode = currentNode.next;
+      }
+    }
+
+    return items;
+  };
 }
 
 test("deleteAt", (t) => {
@@ -200,6 +215,10 @@ test("reverse", (t) => {
   const expected = "interest";
 
   t.is(actual?.value, expected);
+  t.is(
+    list.traverse().join(" "),
+    "interest great with career your watch will we"
+  );
 });
 
 /*
