@@ -64,37 +64,9 @@ class DoublyLinkedList<T> {
 
   public insert = (index: number, value: T): void => this._insert(index, value);
 
-  public insertAtHead = (value: T): void => {
-    const node = new Node(value);
+  public insertHead = (value: T): void => this._insert(0, value);
 
-    if (!this.head || this.size == 0) {
-      this.head = node;
-      this.tail = node;
-    } else {
-      // prepend to & update head
-      this.head.prev = node;
-      node.next = this.head;
-      this.head = node;
-    }
-
-    this.size++;
-  };
-
-  public insertAtTail = (value: T): void => {
-    const node = new Node(value);
-
-    if (!this.tail || this.size == 0) {
-      this.head = node;
-      this.tail = node;
-    } else {
-      // append to & update tail
-      this.tail.next = node;
-      node.prev = this.tail;
-      this.tail = node;
-    }
-
-    this.size++;
-  };
+  public insertTail = (value: T): void => this._insert(this.size - 1, value);
 
   public readAt = (index: number): T | undefined | RangeError => {
     if (index > this.size) throw outOfBoundsError;
@@ -171,6 +143,7 @@ class DoublyLinkedList<T> {
         // remove head if list is empty
         if (!this.tail?.prev) this.head = undefined;
       } else {
+        // delete from middle
         let currentIndex = 0;
         let currentNode: Node<T> | undefined = this.head;
         const desiredIndex = index - 1;
@@ -196,31 +169,48 @@ class DoublyLinkedList<T> {
   };
 
   private _insert = (index: number, value: T): void => {
-    if (this.size > 0 && this.head && this.tail) {
-      if (index > this.size - 1) throw outOfBoundsError;
+    if (index > this.size) throw outOfBoundsError;
 
-      let currentNode: Node<T> | undefined = this.head;
-      let currentIndex = 0;
-      const newNode = new Node(value);
+    const newNode = new Node(value);
 
-      // traverse to node before desired index
-      while (currentIndex < index - 1) {
-        currentNode = currentNode?.next;
-        currentIndex++;
+    if (this.size === 0) {
+      // empty list
+      this.head = newNode;
+      this.tail = newNode;
+    } else {
+      if (index === 0 && this.head) {
+        // prepend to & update head
+        this.head.prev = newNode;
+        newNode.next = this.head;
+        this.head = newNode;
+      } else if (index === this.size - 1 && this.tail) {
+        // append to & update tail
+        this.tail.next = newNode;
+        newNode.prev = this.tail;
+        this.tail = newNode;
+      } else {
+        let currentNode: Node<T> | undefined = this.head;
+        let currentIndex = 0;
+
+        // traverse to node before desired index
+        while (currentIndex < index - 1) {
+          currentNode = currentNode?.next;
+          currentIndex++;
+        }
+
+        if (currentNode && currentIndex === index - 1) {
+          // insert the new node
+          newNode.next = currentNode.next;
+          newNode.prev = currentNode;
+          currentNode.next = newNode;
+          currentNode = newNode.next;
+          if (currentNode) currentNode.prev = newNode;
+        }
       }
-
-      if (currentNode) {
-        // insert the new node
-        newNode.next = currentNode.next;
-        newNode.prev = currentNode;
-        currentNode.next = newNode;
-        currentNode = newNode.next;
-        if (currentNode) currentNode.prev = newNode;
-      }
-
-      // update size
-      this.size++;
     }
+
+    // update size
+    this.size++;
   };
 }
 
@@ -296,21 +286,21 @@ test("insert", (t) => {
     instanceOf: RangeError,
   });
 
-  t.is(error?.message, "DoublyLinkedList: index out of bounds");
+  t.is(error?.message, expectedError);
 });
 
 test("insertAtHead", (t) => {
   const list = new DoublyLinkedList(
     nodesFromSentence("or do not, there is no try")
   );
-  list.insertAtHead("do");
+  list.insertHead("do");
 
   t.is(list.head?.value, "do");
   t.is(list.head?.next?.value, "or");
   t.is(list.size, 8);
 
   const singleItemList = new DoublyLinkedList();
-  singleItemList.insertAtHead(1337);
+  singleItemList.insertHead(1337);
 
   t.is(singleItemList.head?.value, 1337);
   t.is(singleItemList.tail?.value, 1337);
@@ -321,14 +311,14 @@ test("insertAtTail", (t) => {
   const list = new DoublyLinkedList(
     nodesFromSentence("I find your lack of faith...")
   );
-  list.insertAtTail("...mildly amusing");
+  list.insertTail("...mildly amusing");
 
   t.is(list.tail?.value, "...mildly amusing");
   t.is(list.tail?.prev?.value, "faith...");
   t.is(list.size, 7);
 
   const singleItemList = new DoublyLinkedList();
-  singleItemList.insertAtTail(1337);
+  singleItemList.insertTail(1337);
 
   t.is(singleItemList.head?.value, 1337);
   t.is(singleItemList.tail?.value, 1337);
@@ -342,7 +332,7 @@ test("read", (t) => {
   t.is(list.size, 5);
 
   list.deleteTail();
-  list.insertAtTail("funny");
+  list.insertTail("funny");
 
   t.is(list.readAt(4), "funny");
   t.is(list.size, 5);
@@ -351,7 +341,7 @@ test("read", (t) => {
     instanceOf: RangeError,
   });
 
-  t.is(error?.message, "DoublyLinkedList: index out of bounds");
+  t.is(error?.message, expectedError);
 });
 
 test("reverse", (t) => {
@@ -401,3 +391,4 @@ const nodesFromSentence = (sentence: string): Node<string> => {
 const outOfBoundsError = new RangeError(
   `${new DoublyLinkedList().constructor.name}: index out of bounds`
 );
+const expectedError = "DoublyLinkedList: index out of bounds";
