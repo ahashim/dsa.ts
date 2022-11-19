@@ -94,7 +94,7 @@ class DoublyLinkedList<T> {
     this.size++;
   };
 
-  public read = (index: number): T | undefined | RangeError => {
+  public readAt = (index: number): T | undefined | RangeError => {
     if (index > this.size) throw outOfBoundsError;
 
     if (this.head) {
@@ -204,7 +204,7 @@ test("delete", (t) => {
   const list = new DoublyLinkedList(nodesFromSentence("let the wookie win"));
   list.delete(2);
 
-  t.is(list.read(2), "win");
+  t.is(list.readAt(2), "win");
   t.is(list.size, 3);
 
   const error = t.throws(() => list.delete(Infinity), {
@@ -292,16 +292,18 @@ test("insertAtTail", (t) => {
 test("read", (t) => {
   const list = new DoublyLinkedList(nodesFromSentence("i will make it legal"));
 
-  t.is(list.read(4), "legal");
+  t.is(list.readAt(4), "legal");
   t.is(list.size, 5);
 
   list.deleteTail();
   list.insertAtTail("funny");
 
-  t.is(list.read(4), "funny");
+  t.is(list.readAt(4), "funny");
   t.is(list.size, 5);
 
-  const error = t.throws(() => list.read(Infinity), { instanceOf: RangeError });
+  const error = t.throws(() => list.readAt(Infinity), {
+    instanceOf: RangeError,
+  });
 
   t.is(error?.message, "DoublyLinkedList: index out of bounds");
 });
