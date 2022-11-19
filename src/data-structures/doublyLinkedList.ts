@@ -42,37 +42,11 @@ class DoublyLinkedList<T> {
     }
   }
 
-  public deleteFromHead = (): void => {
-    if (this.head) {
-      // move 2nd item into head
-      this.head = this.head.next;
+  public delete = (index: number): void => this._delete(index);
 
-      // detach head
-      if (this.head?.prev) this.head.prev = undefined;
+  public deleteHead = (): void => this._delete(0);
 
-      // remove tail if list is empty
-      if (!this.head?.next) this.tail = undefined;
-
-      // update size
-      this.size--;
-    }
-  };
-
-  public deleteFromTail = (): void => {
-    if (this.tail) {
-      // move 2nd to last item to the tail
-      this.tail = this.tail.prev;
-
-      // detach tail
-      if (this.tail?.next) this.tail.next = undefined;
-
-      // remove head if list is empty
-      if (!this.tail?.prev) this.head = undefined;
-
-      // update size
-      this.size--;
-    }
-  };
+  public deleteTail = (): void => this._delete(this.size - 1);
 
   public indexOf = (value: T): number | undefined => {
     if (this.head) {
@@ -175,6 +149,49 @@ class DoublyLinkedList<T> {
 
     return items;
   };
+
+  private _delete = (index: number): void => {
+    if (this.size > 0 && this.head && this.tail) {
+      if (index > this.size - 1) throw outOfBoundsError;
+
+      if (index === 0) {
+        // delete head
+        this.head = this.head.next;
+        if (this.head?.prev) this.head.prev = undefined;
+
+        // remove tail if list is empty
+        if (!this.head?.next) this.tail = undefined;
+      } else if (index === this.size - 1) {
+        // delete tail
+        this.tail = this.tail?.prev;
+        if (this.tail?.next) this.tail.next = undefined;
+
+        // remove head if list is empty
+        if (!this.tail?.prev) this.head = undefined;
+      } else {
+        let currentIndex = 0;
+        let currentNode: Node<T> | undefined = this.head;
+        const desiredIndex = index - 1;
+
+        // traverse to one node right before the node to delete
+        while (currentIndex !== desiredIndex && currentNode) {
+          currentNode = currentNode.next;
+          currentIndex++;
+        }
+
+        // ensure we are at the right node
+        if (currentNode && currentIndex === desiredIndex) {
+          // connect the nodes around the index to delete
+          currentNode.next = currentNode.next?.next;
+          currentNode = currentNode.next;
+          if (currentNode) currentNode.prev = currentNode?.prev?.prev;
+        }
+      }
+
+      // update size
+      this.size--;
+    }
+  };
 }
 
 test("head", (t) => {
@@ -183,16 +200,30 @@ test("head", (t) => {
   t.is(list.head?.value, "hello");
 });
 
+test("delete", (t) => {
+  const list = new DoublyLinkedList(nodesFromSentence("let the wookie win"));
+  list.delete(2);
+
+  t.is(list.read(2), "win");
+  t.is(list.size, 3);
+
+  const error = t.throws(() => list.delete(Infinity), {
+    instanceOf: RangeError,
+  });
+
+  t.is(error?.message, "DoublyLinkedList: index out of bounds");
+});
+
 test("deleteFromHead", (t) => {
   const list = new DoublyLinkedList(nodesFromSentence("this is the wei"));
-  list.deleteFromHead();
+  list.deleteHead();
 
   t.is(list.head?.value, "is");
   t.is(list.head?.prev, undefined);
   t.is(list.size, 3);
 
   const singleItemList = new DoublyLinkedList(new Node(1337));
-  singleItemList.deleteFromTail();
+  singleItemList.deleteTail();
 
   t.is(singleItemList.head, undefined);
   t.is(singleItemList.tail, undefined);
@@ -201,14 +232,14 @@ test("deleteFromHead", (t) => {
 
 test("deleteFromTail", (t) => {
   const list = new DoublyLinkedList(nodesFromSentence("that's no moon"));
-  list.deleteFromTail();
+  list.deleteTail();
 
   t.is(list.tail?.value, "no");
   t.is(list.tail?.next, undefined);
   t.is(list.size, 2);
 
   const singleItemList = new DoublyLinkedList(new Node(1337));
-  singleItemList.deleteFromHead();
+  singleItemList.deleteHead();
 
   t.is(singleItemList.head, undefined);
   t.is(singleItemList.tail, undefined);
@@ -264,13 +295,13 @@ test("read", (t) => {
   t.is(list.read(4), "legal");
   t.is(list.size, 5);
 
-  list.deleteFromTail();
+  list.deleteTail();
   list.insertAtTail("funny");
 
   t.is(list.read(4), "funny");
   t.is(list.size, 5);
 
-  const error = t.throws(() => list.read(Infinity), { instanceOf: Error });
+  const error = t.throws(() => list.read(Infinity), { instanceOf: RangeError });
 
   t.is(error?.message, "DoublyLinkedList: index out of bounds");
 });
