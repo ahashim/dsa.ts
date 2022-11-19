@@ -100,7 +100,7 @@ class LinkedList<T> {
     }
   };
 
-  public read = (index: number): T | undefined => {
+  public readAt = (index: number): T | undefined => {
     if (this.head) {
       let currentIndex = 0;
       let currentNode: Node<T> | undefined = this.head;
@@ -157,7 +157,7 @@ test("deleteAt", (t) => {
   const index = 2;
   list.deleteAt(index);
 
-  const actual = list.read(index);
+  const actual = list.readAt(index);
   const expected = "not";
 
   t.is(actual, expected);
@@ -186,7 +186,7 @@ test("insertAt", (t) => {
   const index = 1;
   list.insertAt(index, "hate");
 
-  const actual = list.read(index + 1);
+  const actual = list.readAt(index + 1);
   const expected = "sand";
 
   t.is(actual, expected);
@@ -195,12 +195,12 @@ test("insertAt", (t) => {
 test("read", (t) => {
   const list = new LinkedList(nodesFromSentence("i am the senate"));
 
-  const actual = list.read(3);
+  const actual = list.readAt(3);
   const expected = "senate";
 
   t.is(actual, expected);
 
-  const error = t.throws(() => list.read(100), { instanceOf: RangeError });
+  const error = t.throws(() => list.readAt(100), { instanceOf: RangeError });
 
   t.is(error?.message, "LinkedList: index out of bounds");
 });
